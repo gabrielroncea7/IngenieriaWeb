@@ -14,7 +14,7 @@
 
 <a name="purpose"></a>
 ## Purpose
-The purpose of this project is to have a first contact with the MERN stack by creating the online game known as "Wordle"
+The purpose of this project is to have a first contact with the MERN stack by creating an online game known as "Wordle"
 <a name="requeriments"></a>
 ## Requeriments
 - NodeJS v18 or later
