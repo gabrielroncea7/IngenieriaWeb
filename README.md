@@ -11,6 +11,7 @@
 1. [Purpose](#purpose)
 1. [Requeriments](#requeriments)
 1. [Technologies](#technologies)
+1. [Dependencies](#dependencies)
 
 <a name="purpose"></a>
 ## Purpose
@@ -26,3 +27,11 @@ The purpose of this project is to have a first contact with the MERN stack by cr
 - **Back-End**: NodeJs and ExpressJS
 - **API**: APIRest
 - **Front-End**: React
+<a name="dependencies"></a>
+## Dependencies
+- **Back-End Dependencies**:
+    - Express
+    - Mongoose
+    - Dotenv
+- **Front-End Dependencies**:
+    - React
