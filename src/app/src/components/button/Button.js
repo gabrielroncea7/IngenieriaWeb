@@ -8,10 +8,10 @@ import React from 'react';
 
 function Button(props) {
 //Extrae el valor del texto y la accion de cuando se pulsa (onClick)
-  const { texto, onClick } = props;
+  const { text, onClick } = props;
 
   return (
-    <button onClick={onClick}>{texto}</button>
+    <button onClick={onClick}>{text}</button>
   );
 }
 
