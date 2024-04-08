@@ -1,4 +1,4 @@
-// Import Express.js
+// Import Express
 const express = require('express');
 
 // Creating an instance of express
@@ -46,23 +46,3 @@ class Email {
         }
     }
 }
-
-// Examples of use
-let myEmail = Email.Maker('example@example.com');
-console.log('Email inicial:', myEmail.get());
-
-myEmail.create('newexample@example.com');
-console.log('Email creado:', myEmail.get());
-
-myEmail.set('anotherexample@example.com');
-console.log('Email establecido:', myEmail.get());
-
-let anotherEmail = Email.Maker('anotherexample@example.com');
-myEmail.set(anotherEmail);
-console.log('Email establecido con otro objeto Email:', myEmail.get());
-
-// Starting express server
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor Express corriendo en el puerto ${PORT}`);
-});
