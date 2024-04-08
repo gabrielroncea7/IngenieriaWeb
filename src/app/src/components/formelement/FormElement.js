@@ -1,8 +1,8 @@
-//Componente de React que debe devolver un elemento de un formulario
-//Parametros recibidos:
-// - Tipo
-// - Nombre del campo
-// - Requerido (true/false)
+//Component for element of form
+//Parameters:
+// - Type
+// - Name of element
+// - Required element (true/false)
 
 
 
