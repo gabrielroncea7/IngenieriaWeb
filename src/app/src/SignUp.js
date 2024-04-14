@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 //ENCRYPT PASSWORD FROM VIEW
 //import { sha256 } from 'js-sha256';
-import Form from './components/form/Form;
+import Form from './components/form/Form';
 
 
 function SignUp() {
@@ -57,10 +57,9 @@ const Button = { Type: 'submit', Value: 'Sign Up' };
   return (
     <div>
       <h2>Create an Account</h2>
-      <Form Elements={formElements} Button={button} onSubmit={handleSubmit} />
+      <Form Elements={Elements} Button={Button} onSubmit={handleSubmit} />
       <p>Do you already have an account? <Link to="/signin">Sign In</Link></p>
     </div>
   );
 };
-
 export default SignUp;

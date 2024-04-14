@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 //FOR NAVIGATION
-import { useHistory } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 //ENCRYPT PASSWORD
 //import { sha256 } from 'js-sha256';
-import Form from './components/form/Form;
+import Form from './components/form/Form';
 
 const SignIn = () => {
 
@@ -12,7 +12,7 @@ const SignIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 //INITIALIZE USE HISTORY FOR NAVIGATION
-  const history = useHistory();
+  const history = useNavigate();
 
 //update values
   const handleUsernameChange = (event) => setUsername(event.target.value);
