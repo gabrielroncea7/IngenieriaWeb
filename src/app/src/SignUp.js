@@ -63,8 +63,4 @@ const Button = { Type: 'submit', Value: 'Sign Up' };
   );
 };
 
-//REMEMBER ADD TO APP.JS
-//	<Route exact path="/signin" component={SignIn} />
-//OR LINK DOESNT WORK
-
 export default SignUp;
