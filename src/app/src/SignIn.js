@@ -1,15 +1,16 @@
+import React from 'react';
 import { useState } from 'react';
 //FOR NAVIGATION
 import { useHistory } from 'react-router-dom';
 //ENCRYPT PASSWORD
 //import { sha256 } from 'js-sha256';
+import Form from '../form/Form;
 
 const SignIn = () => {
 
 //empty strings to be set
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
 //INITIALIZE USE HISTORY FOR NAVIGATION
   const history = useHistory();
 
@@ -48,20 +49,21 @@ const SignIn = () => {
     }
   };
 
+	const signInForm = {
+		Elements: [
+			{ Type: 'input', Name: 'username', Placeholder: 'Username', Value: username, OnChange: handleUsernameChange },
+      			{ Type: 'password', Name: 'password', Placeholder: 'Password', Value: password, OnChange: handlePasswordChange }
+    		],
+    		Button: { Type: 'submit', Text: 'Sign In' }
+  	};
+	
   return (
-	<div>
-	<h2>Sign into an Account</h2>
-    <form onSubmit={handleSubmit}>
-      <label>Username:</label>
-      <input type="text" value={username} onChange={handleUsernameChange} />
-
-      <label>Password:</label>
-      <input type="password" value={password} onChange={handlePasswordChange} />
-
-      <button type="submit">Sign In</button>
-    </form>
-	<p>Do you want to create an account? <Link to="/signup">Sign Up</Link></p>
-	</div>
+    <div>
+      <h2>Sign into an Account</h2>
+	  //Form componente with signin for and submit button
+      <Form {...signInForm} onSubmit={handleSubmit} />
+      <p>Do you want to create an account? <Link to="/signup">Sign Up</Link></p>
+    </div>
   );
 };
 
