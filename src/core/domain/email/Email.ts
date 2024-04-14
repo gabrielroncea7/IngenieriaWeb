@@ -11,7 +11,7 @@ export class Email {
     }
 
     // Método para establecer el email
-    set(email: string): boolean {
+    set(email: string) {
         if (typeof email === 'string') {
             this._email = email;
             return true;
@@ -37,7 +37,7 @@ export class Email {
     }
 
     // Método para establecer el email usando otro objeto Email
-    setByEmailObj(emailObj: Email): boolean {
+    setByEmailObj(emailObj: Email):boolean {
         if (emailObj instanceof Email) {
             this._email = emailObj.get();
             return true;
