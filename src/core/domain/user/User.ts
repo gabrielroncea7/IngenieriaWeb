@@ -1,7 +1,7 @@
 // Importar la clase Email
 import { Email } from '../email/Email';
 
-class User {
+export class User {
     private _id: number;
     private _username: string;
     private _email: Email;
@@ -28,7 +28,7 @@ class User {
         this._gamesPlayed = gamesPlayed;
     }
 
-    // Métodos para obtener y establecer los campos
+    // Getters and setters
     getId(): number {
         return this._id;
     }
