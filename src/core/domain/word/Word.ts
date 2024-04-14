@@ -1,4 +1,4 @@
-class Word {
+export class Word {
     private _word: string;
     private _fecha: Date;
 
