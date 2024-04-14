@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 //ENCRYPT PASSWORD
 //import { sha256 } from 'js-sha256';
-import Form from '../form/Form;
+import Form from './components/form/Form;
 
 const SignIn = () => {
 
