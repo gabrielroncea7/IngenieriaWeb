@@ -1,18 +1,17 @@
-// Import Express
-const express = require('express');
+export class Email {
+    private _email: string;
 
-// Creating an instance of express
-const app = express();
-
-// Class Email
-class Email {
-    // Method Maker witheout specifications
-    constructor(email) {
+    constructor(email: string) {
         this._email = email;
     }
 
-    // Method Set to stablish the email
-    set(email) {
+    // Método estático para crear una instancia de Email
+    static Maker(email: string): Email {
+        return new Email(email);
+    }
+
+    // Método para establecer el email
+    set(email: string): boolean {
         if (typeof email === 'string') {
             this._email = email;
             return true;
@@ -21,23 +20,24 @@ class Email {
         }
     }
 
-    // Method Get to obtain the email
-    get() {
+    // Método para obtener el email
+    get(): string {
         return this._email;
     }
 
-  // Method Create with the specific restrictions of Value Object Pattern
-  create(email) {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (typeof email === 'string' && emailRegex.test(email)) {
-        this._email = email;
-        return true;
-    } else {
-        return false;
+    // Método para crear un email con el formato especificado
+    create(email: string): boolean {
+        const emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (typeof email === 'string' && emailRegex.test(email)) {
+            this._email = email;
+            return true;
+        } else {
+            return false;
+        }
     }
-}
-    // Método to stablish an email using an object email
-    set(emailObj) {
+
+    // Método para establecer el email usando otro objeto Email
+    setByEmailObj(emailObj: Email): boolean {
         if (emailObj instanceof Email) {
             this._email = emailObj.get();
             return true;
