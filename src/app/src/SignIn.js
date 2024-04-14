@@ -67,8 +67,4 @@ const SignIn = () => {
   );
 };
 
-//REMEMBER ADD TO APP.JS
-//	<Route exact path="/signup" component={SignUp} />
-//OR LINK DOESNT WORK
-
 export default SignIn;
