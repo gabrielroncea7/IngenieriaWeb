@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 //ENCRYPT PASSWORD FROM VIEW
 //import { sha256 } from 'js-sha256';
+import Form from './components/form/Form;
 
 
 function SignUp() {
@@ -46,40 +47,17 @@ function SignUp() {
   	}
   };
 
-
+const Elements = [
+    { Type: 'input', Name: 'username', Placeholder: 'Username', Value: username, OnChange: handleUsernameChange },
+    { Type: 'input', Name: 'email', Placeholder: 'Email', Value: email, OnChange: handleEmailChange },
+    { Type: 'input', Name: 'password', Placeholder: 'Password', Value: password, OnChange: handlePasswordChange }
+  ];
+const Button = { Type: 'submit', Value: 'Sign Up' };
+	
   return (
     <div>
       <h2>Create an Account</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={handleUsernameChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
+      <Form Elements={formElements} Button={button} onSubmit={handleSubmit} />
       <p>Do you already have an account? <Link to="/signin">Sign In</Link></p>
     </div>
   );
