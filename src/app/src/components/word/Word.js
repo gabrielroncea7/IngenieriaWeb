@@ -17,7 +17,8 @@ function Word(props) {
   };
 
   return (
-    <div> // dix style= {{ fontSize: 'x px', fontWeight: 'bold' }} to make bigger letters
+    <div>
+      <!-- // dix style= {{ fontSize: 'x px', fontWeight: 'bold' }} to make bigger letters -->
       {renderLetters()}
     </div>
   );
