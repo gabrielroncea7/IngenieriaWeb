@@ -6,14 +6,15 @@ import SignIn from './SignIn';
 
 
 function App() {
+
   return (
     <>
       <Router>
         <Routes>
+          <Route index element={<Navigate to="/signup" replace/>}/>
           <Route exact path="/signup" element={<SignUp/>} />
           <Route exact path="/signin" element={<SignIn/>} />    
         </Routes>
-        <Navigate from="/" to="/signup" />
       </Router>
     </>
   );
