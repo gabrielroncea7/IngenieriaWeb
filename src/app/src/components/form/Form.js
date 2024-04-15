@@ -13,7 +13,7 @@ import FormElement from '../formelement/FormElement';
 function Form(props) {
 
 //extracts the FormElements and the Button
-  const { Elements, Button } = props;
+  const { Elements, button } = props;
 
   // Renders Elements and makes them FormElements to show in the finished Form
   const renderElements = () => {
@@ -24,9 +24,8 @@ function Form(props) {
 
   return (
     <form>
-      //renders FormElements and shows the Button
       {renderElements()}
-      <Button {...Button} />
+      <Button {...button} />
     </form>
   );
 }

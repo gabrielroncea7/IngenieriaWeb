@@ -60,7 +60,6 @@ const SignIn = () => {
   return (
     <div>
       <h2>Sign into an Account</h2>
-	  //Form componente with signin for and submit button
       <Form {...signInForm} onSubmit={handleSubmit} />
       <p>Do you want to create an account? <Link to="/signup">Sign Up</Link></p>
     </div>
