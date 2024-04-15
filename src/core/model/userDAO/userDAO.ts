@@ -1,7 +1,12 @@
-import User from '../Schema/UserSchema';
+import UserSchema from '../Schema/UserSchema';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import { User } from '../../domain/user/User';
+import { Email } from '../../domain/email/Email';
 
-class UserDAO { //CUANDO SE DISPONGA DE LA CLASE USER SE MODIFICARA PARA QUE LOS GET DEVUELVAN EL OBJETO
+dotenv.config(); //para que detecte el archivo .env y localice la URI de la BD para la conexion
+
+class UserDAO {
 
     constructor(){
 
@@ -9,24 +14,11 @@ class UserDAO { //CUANDO SE DISPONGA DE LA CLASE USER SE MODIFICARA PARA QUE LOS
 
     }
 
-
-   public async getUser(){
-
-        this.ConnectDB(); //conectamos la base de datos
-
-        const Users = await User.find(); //Users contiene todos los datos encontrados en la BD que siguen el schema User
-
-        this.DisconnectDB(); //desconectamos la base de datos
-
-        console.log(Users);
-
-    }
-
     public async getUserbyname(name: string){
 
         this.ConnectDB(); //conectamos al la base de datos
 
-        const userfound = await User.findOne({_username: name}); 
+        const userfound = await UserSchema.findOne({_username: name}); 
 
         if(!userfound){
 
@@ -34,11 +26,30 @@ class UserDAO { //CUANDO SE DISPONGA DE LA CLASE USER SE MODIFICARA PARA QUE LOS
 
             this.DisconnectDB(); //desconectamos la base de datos
 
+            return false;
+
+        }
+        else{
+
+             //transformamos el userfound en un objeto de la clase User
+
+            const email = new Email(userfound._email || "");
+            const user = new User("", "", email, "", 0, 0, 0);
+
+            user.setUsername(userfound._username || ""); //se pone la segunda opción porque es tipo undefined 
+            user.setEmail(email); //se pone solo una opcion porque arriba se esta creando o dejando vacia según el valor de userfound
+            user.setPassword(userfound._password || "");
+            user.setPoints(userfound._points || 0);
+            user.setWins(userfound._wins || 0);
+            user.setGamesPlayed(userfound._gamesPlayed || 0);
+
+            this.DisconnectDB(); //desconectamos la base de datos
+
+            return user;
+
         }
 
-        console.log(userfound);
-
-        this.DisconnectDB(); //desconectamos la base de datos
+       
 
     }
 
@@ -46,7 +57,7 @@ class UserDAO { //CUANDO SE DISPONGA DE LA CLASE USER SE MODIFICARA PARA QUE LOS
 
         this.ConnectDB(); //conectamos la base de datos
 
-        const user = new User();
+        const user = new UserSchema();
 
         user._username = username; //como no tengo el objeto de la clase USER asignare a la plantilla los valores manualmente
         user._email = email;
@@ -63,13 +74,15 @@ class UserDAO { //CUANDO SE DISPONGA DE LA CLASE USER SE MODIFICARA PARA QUE LOS
 
             this.DisconnectDB(); //desconectamos la base de datos
 
-            console.log('El usuario ha sido guardado correctamente');
+            return true;
 
         }catch(error){
 
             this.DisconnectDB(); //desconectamos la base de datos
 
             console.log(error);
+
+            return false;
 
         }
 
@@ -79,15 +92,15 @@ class UserDAO { //CUANDO SE DISPONGA DE LA CLASE USER SE MODIFICARA PARA QUE LOS
 
         this.ConnectDB(); //conectamos la base de datos
 
-        const usertodelete = await User.findById(id);
+        const usertodelete = await UserSchema.findById(id);
 
         if(usertodelete){
 
-            await User.findByIdAndDelete(usertodelete._id);
-
-            console.log('El usuario se ha eliminado correctamente');
+            await UserSchema.findByIdAndDelete(usertodelete._id);
 
             this.DisconnectDB(); //desconectamos la base de datos
+
+            return true;
 
         }
         else{
@@ -95,6 +108,8 @@ class UserDAO { //CUANDO SE DISPONGA DE LA CLASE USER SE MODIFICARA PARA QUE LOS
             console.log('No se ha encontrado el usuario');
 
             this.DisconnectDB(); //desconectamos la base de datos
+
+            return false;
 
         }
 
@@ -106,11 +121,13 @@ class UserDAO { //CUANDO SE DISPONGA DE LA CLASE USER SE MODIFICARA PARA QUE LOS
     
             await mongoose.connect(process.env.MONGODB_URI || ""); //process.env.MONGODB_URI es una variable de entorno que se encuentra en src/core/.env, se pone el || "" pork podria ser undefined (NUNCA lo sera en este caso)
     
-            console.log('MongoDB database connected');
+            return true;
     
         }catch(error){
     
             console.log(error);
+
+            return false;
     
         }
     }
@@ -121,11 +138,11 @@ class UserDAO { //CUANDO SE DISPONGA DE LA CLASE USER SE MODIFICARA PARA QUE LOS
 
             await mongoose.disconnect();
 
-            console.log('MongoDB database disconnected properly');
+            return true;
 
         }catch(error){
 
-            console.log('Error al cerrar al desconectar la Base de datos');
+            return false;
 
         }
 
