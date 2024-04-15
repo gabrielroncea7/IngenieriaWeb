@@ -14,12 +14,12 @@ function Letter(props) {
   const backgroundColor = color === 'red' ? 'red' : color === 'yellow' ? 'yellow' : color === 'green' ? 'green' : 'gray';
 
   return (
-	// padding: 'x px', margin: 'x px' if needed
+	<!-- padding: 'x px', margin: 'x px' if needed -->
     <div style={{ backgroundColor, display: 'inline-block' }}>
-      // font size and bold letter?
-      //<span style={{ fontSize: '24px', fontWeight: 'bold' }}>
+      <!-- font size and bold letter? -->
+      <!-- <span style={{ fontSize: '24px', fontWeight: 'bold' }}> -->
 	{letter}
-      //</span>
+      <!-- </span> -->
     </div>
   );
 }

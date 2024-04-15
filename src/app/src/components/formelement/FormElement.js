@@ -1,8 +1,8 @@
 //Component for element of form
 //Parameters:
-// - Type
-// - Name of element
-// - Required element (true/false)
+// - type
+// - name of element
+// - required element (true/false)
 
 
 
@@ -10,26 +10,26 @@ import React from 'react';
 
 function FormElement(props) {
 //extract type, name and requited aspect of element
-  const { Type, Name, Required } = props;
+  const { type, name, required } = props;
 
   // requiredValue knows if the element is required (true) or not (false)
-  const requiredValue = Required ? "required" : "";
+  const requiredValue = required ? "required" : "";
 
   // switch between types: input, selection or textarea, according to element type
   let element = null;
-  switch (Type) {
+  switch (type) {
 
     case "input":
-      element = <input type="text" id={Name} {...requiredValue} />;
+      element = <input type="text" id={name} {...requiredValue} />;
       break;
 
     case "textarea":
-      element = <textarea id={Name} {...requiredValue}></textarea>;
+      element = <textarea id={name} {...requiredValue}></textarea>;
       break;
 
     case "select":
       element = (
-        <select id={Name} {...requiredValue}>
+        <select id={name} {...requiredValue}>
           <option value="">Select</option>
           <option value="opcion1">Opción 1</option>
           <option value="opcion2">Opción 2</option>
@@ -39,14 +39,14 @@ function FormElement(props) {
       break;
 
     default:
-      element = <input type="text" id={Name} {...requiredValue} />;
+      element = <input type="text" id={name} {...requiredValue} />;
 
   }
 
   return (
           <>
             <div>
-              <label from={Name}>{Name}</label>
+              <label from={name}>{name}</label>
             </div>
             <div>
               {element}
@@ -71,9 +71,9 @@ export default FormElement;
 //  return (
 //    <div>
 //      <h1>FormElement Component</h1>
-//      <FormElement Type="input" Name="name" Required={true} />
-//      <FormElement Type="textarea" Name="desc" Required={false} />
-//      <FormElement Type="select" Name="op" Required={true} />
+//      <FormElement type="input" name="name" required={true} />
+//      <FormElement type="textarea" name="desc" required={false} />
+//      <FormElement type="select" name="op" required={true} />
 //    </div>
 //  );
 //}
