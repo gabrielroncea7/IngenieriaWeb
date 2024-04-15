@@ -1,0 +1,22 @@
+/*CSS file for Button component*/
+/*Button with white text and green background, text aligned
+at center and 20px font
+When hovered over -> turns darker after 0.5 seconds
+When clicked -> turns lighter*/
+
+Button {
+    color:white;
+    background-color:green;
+    text-align: center;
+    font-size: 20px;
+
+}
+
+.Button:hover {
+    background-color:rgb(0, 80, 0);
+    transition: 0.5s;
+}
+
+.Button:active {
+    background-color:rgb(80, 250, 80);
+}
