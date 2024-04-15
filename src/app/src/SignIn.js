@@ -50,9 +50,9 @@ const SignIn = () => {
   };
 
 	const signInForm = {
-		Elements: [
-			{ Type: 'input', Name: 'username', Placeholder: 'Username', Value: username, OnChange: handleUsernameChange },
-      			{ Type: 'password', Name: 'password', Placeholder: 'Password', Value: password, OnChange: handlePasswordChange }
+		elements: [
+			{ type: 'input', name: 'username', placeholder: 'Username', value: username, onchange: handleUsernameChange },
+      			{ type: 'password', name: 'password', placeholder: 'Password', value: password, onchange: handlePasswordChange }
     		],
     		button: { type: 'submit', text: 'Sign In' }
   	};
