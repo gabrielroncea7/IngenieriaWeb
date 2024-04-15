@@ -1,4 +1,4 @@
-import WordDAO from '../../DAO/wordDAO';
+import WordDAO from '../wordDAO';
 
 describe('WordDAO', () => {
   let wordDAO: WordDAO;
