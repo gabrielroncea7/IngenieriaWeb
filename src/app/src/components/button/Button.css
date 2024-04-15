@@ -5,18 +5,18 @@ When hovered over -> turns darker after 0.5 seconds
 When clicked -> turns lighter*/
 
 Button {
-    color:white;
-    background-color:green;
+    color: white;
+    background-color: green;
     text-align: center;
     font-size: 20px;
 
 }
 
 .Button:hover {
-    background-color:rgb(0, 80, 0);
+    background-color: rgb(0, 80, 0);
     transition: 0.5s;
 }
 
 .Button:active {
-    background-color:rgb(80, 250, 80);
+    background-color: rgb(80, 250, 80);
 }
