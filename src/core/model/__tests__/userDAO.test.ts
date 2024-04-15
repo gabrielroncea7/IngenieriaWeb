@@ -1,4 +1,4 @@
-import UserDAO from '../userDAO';
+import UserDAO from '../userDAO/userDAO';
 
 
 
