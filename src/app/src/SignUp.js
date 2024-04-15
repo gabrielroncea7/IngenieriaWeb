@@ -47,19 +47,20 @@ function SignUp() {
   	}
   };
 
-const Elements = [
-    { Type: 'input', Name: 'username', Placeholder: 'Username', Value: username, OnChange: handleUsernameChange },
-    { Type: 'input', Name: 'email', Placeholder: 'Email', Value: email, OnChange: handleEmailChange },
-    { Type: 'input', Name: 'password', Placeholder: 'Password', Value: password, OnChange: handlePasswordChange }
+const elements = [
+    { type: 'input', name: 'username', placeholder: 'Username', value: username, onchange: handleUsernameChange },
+    { type: 'input', name: 'email', placeholder: 'Email', value: email, onchange: handleEmailChange },
+    { type: 'input', name: 'password', placeholder: 'Password', value: password, onchange: handlePasswordChange }
   ];
-const Button = { type: 'submit', text: 'Sign Up' };
+const button = { type: 'submit', text: 'Sign Up' };
 	
   return (
     <div>
       <h2>Create an Account</h2>
-      <Form Elements={Elements} button={Button} onSubmit={handleSubmit} />
+      <Form elements={elements} button={button} onSubmit={handleSubmit} />
       <p>Do you already have an account? <Link to="/signin">Sign In</Link></p>
     </div>
   );
 };
+
 export default SignUp;
