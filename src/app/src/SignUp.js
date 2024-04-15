@@ -52,12 +52,12 @@ const Elements = [
     { Type: 'input', Name: 'email', Placeholder: 'Email', Value: email, OnChange: handleEmailChange },
     { Type: 'input', Name: 'password', Placeholder: 'Password', Value: password, OnChange: handlePasswordChange }
   ];
-const Button = { Type: 'submit', Value: 'Sign Up' };
+const Button = { type: 'submit', text: 'Sign Up' };
 	
   return (
     <div>
       <h2>Create an Account</h2>
-      <Form Elements={Elements} Button={Button} onSubmit={handleSubmit} />
+      <Form Elements={Elements} button={Button} onSubmit={handleSubmit} />
       <p>Do you already have an account? <Link to="/signin">Sign In</Link></p>
     </div>
   );

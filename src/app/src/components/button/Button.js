@@ -8,10 +8,10 @@ import React from 'react';
 
 function Button(props) {
 //extracts the vaue of the text and the onClick action of the button
-  const { text, onClick } = props;
+  const { text, onClick, type } = props;
 
   return (
-    <button onClick={onClick}>{text}</button>
+    <button onClick={onClick} type={type}>{text}</button>
   );
 }
 

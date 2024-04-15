@@ -20,16 +20,16 @@ function FormElement(props) {
   switch (Type) {
 
     case "input":
-      element = <input type="text" name={Name} {...requiredValue} />;
+      element = <input type="text" id={Name} {...requiredValue} />;
       break;
 
     case "textarea":
-      element = <textarea name={Name} {...requiredValue}></textarea>;
+      element = <textarea id={Name} {...requiredValue}></textarea>;
       break;
 
     case "select":
       element = (
-        <select name={Name} {...requiredValue}>
+        <select id={Name} {...requiredValue}>
           <option value="">Select</option>
           <option value="opcion1">Opción 1</option>
           <option value="opcion2">Opción 2</option>
@@ -39,11 +39,20 @@ function FormElement(props) {
       break;
 
     default:
-      element = <input type="text" name={Name} {...requiredValue} />;
+      element = <input type="text" id={Name} {...requiredValue} />;
 
   }
 
-  return element;
+  return (
+          <>
+            <div>
+              <label from={Name}>{Name}</label>
+            </div>
+            <div>
+              {element}
+            </div>
+          </>
+        );
 }
 
 export default FormElement;
