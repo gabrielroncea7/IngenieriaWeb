@@ -54,7 +54,7 @@ const SignIn = () => {
 			{ Type: 'input', Name: 'username', Placeholder: 'Username', Value: username, OnChange: handleUsernameChange },
       			{ Type: 'password', Name: 'password', Placeholder: 'Password', Value: password, OnChange: handlePasswordChange }
     		],
-    		Button: { type: 'submit', text: 'Sign In' }
+    		button: { type: 'submit', text: 'Sign In' }
   	};
 	
   return (
