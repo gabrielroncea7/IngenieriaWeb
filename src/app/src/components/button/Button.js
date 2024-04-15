@@ -5,6 +5,7 @@
 
 
 import React from 'react';
+import "./Button.css";
 
 function Button(props) {
 //extracts the vaue of the text and the onClick action of the button
