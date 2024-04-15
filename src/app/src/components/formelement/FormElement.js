@@ -31,9 +31,9 @@ function FormElement(props) {
       element = (
         <select name={Name} {...requiredValue}>
           <option value="">Select</option>
-          //<option value="opcion1">Opción 1</option>
-          //<option value="opcion2">Opción 2</option>
-          //<option value="opcion3">Opción 3</option>
+          <option value="opcion1">Opción 1</option>
+          <option value="opcion2">Opción 2</option>
+          <option value="opcion3">Opción 3</option>
         </select>
       );
       break;

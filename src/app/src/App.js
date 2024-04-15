@@ -10,8 +10,8 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/signin" component={SignIn} />    
+          <Route exact path="/signup" element={<SignUp/>} />
+          <Route exact path="/signin" element={<SignIn/>} />    
         </Routes>
         <Navigate from="/" to="/signup" />
       </Router>
