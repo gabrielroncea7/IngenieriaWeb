@@ -3,6 +3,7 @@
 // If no color: gray
 
 import React from 'react';
+import "./Letter.css";
 
 function Letter(props) {
   //get letter and color of letter from sent props
