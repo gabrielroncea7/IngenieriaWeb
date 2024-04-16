@@ -1,0 +1,23 @@
+/*CSS file for Form component*/
+/* Form with gray text and white background, text aligned left and 14px font, gray green border
+When hovered over -> turns darker after 0.3 seconds
+When clicked -> turns brighter
+Similar behavior to FormElement
+*/
+
+Form {
+	color: gray;
+	background-color: white;
+	text-align: left;
+	font-size: 14px;
+	border-color: #769375;
+}
+
+.Form:hover {
+	border-color: #369633;
+	transition: 0.3 s;
+}
+
+.Form.focus {
+	border-color: #5cea57;
+}
