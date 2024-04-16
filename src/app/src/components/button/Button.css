@@ -8,13 +8,12 @@ Button {
     color: white;
     background-color: green;
     text-align: center;
-    font-size: 20px;
-
+    font-size: 20 px;
 }
 
 .Button:hover {
     background-color: rgb(0, 80, 0);
-    transition: 0.5s;
+    transition: 0.5 s;
 }
 
 .Button:active {
