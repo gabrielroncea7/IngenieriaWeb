@@ -1,0 +1,21 @@
+/*CSS file for Instructions component*/
+/*White background with gray letters, turns green when hovered and focus*/
+
+Instructions {
+	color: gray;
+	background-color: white;
+	text-align: left;
+	font-size: 16 px;
+}
+
+.Instructions:hover {
+	border-color: #1c611a;
+	transition: 0.5 s;
+}
+
+.Instructions:focus {
+	color: #034900;
+	background-color: #daffd9;
+	border-color: #5ef55a;
+	transition: 0.5 s;
+}
