@@ -7,13 +7,13 @@ FormElement {
     color: gray;
     background-color: white;
     text-align: left;
-    font-size: 12px;
+    font-size: 12 px;
     border-color: #769375;
 }
 
 .FormElement:hover {
     border-color: #369633;
-    transition: 0.5s;
+    transition: 0.5 s;
 }
 
 .FormElement:focus {
