@@ -1,0 +1,22 @@
+/*CSS file for Letter component*/
+/* White background and gray letter, when the focus is on it it turns green*/
+
+Letter {
+	color: gray;
+	background-color: white;
+	text-align: left;
+	font-size: 16px;
+}
+
+.Letter:hover {
+	border-color: #429f3f;
+	transition: 0.5 s;
+}
+
+.Letter.focus {
+	color: #035300;
+	background-color: #9ff79c;
+	font-size: 18 px;
+	border-color: #57de52;
+	transition: 0.5 s;
+}
