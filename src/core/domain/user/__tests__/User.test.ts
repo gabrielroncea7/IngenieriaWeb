@@ -1,6 +1,7 @@
 import { User } from '../User';
 import { Email } from '../../email/Email';
 
+
 describe('Pruebas para la clase User', () => {
     let user: User;
     const email = new Email('example@example.com');
