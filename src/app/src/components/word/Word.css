@@ -1,0 +1,22 @@
+/*CSS file for Word component*/
+/*Works similar to Letter CSS*/
+
+Word {
+	color: gray;
+	background-color: white;
+	text-align: left;
+	font-size: 16 px;
+}
+
+.Word:hover {
+	border-color: #429f3f;
+	transition: 0.5 s;
+}
+
+.Word.focus {
+	color: #035300;
+	background-color: #d0ffce;
+	font-size: 18 px;
+	border-color: #6da16b;
+	transition: 0.5 s;
+}
