@@ -18,6 +18,6 @@ Form {
 	transition: 0.3 s;
 }
 
-.Form.focus {
+.Form:focus {
 	border-color: #5cea57;
 }
