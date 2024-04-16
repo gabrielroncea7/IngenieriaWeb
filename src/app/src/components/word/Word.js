@@ -1,5 +1,6 @@
 import React from 'react';
 import Letter from '../letter/Letter';
+import "./Word.css";
 
 
 function Word(props) {
