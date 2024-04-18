@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 //ENCRYPT PASSWORD
 //import { sha256 } from 'js-sha256';
 import Form from './components/form/Form';
+import signIn from './services/accountServices'
 
 const SignIn = () => {
 
@@ -26,6 +27,17 @@ const SignIn = () => {
 
     const data = { username, password }; //if want encrypted password, password: hashedPassword
 
+    signIn(data)
+      .then(response => {
+        if (response.status == 200) {
+          // SUCCESS -> go to main page
+          history.push('/App');
+        } else {
+          //ERROR MESSAGE
+          //console.error('Error:', response.statusText);
+        }
+      })
+
     try {
 	//returns account data to account manager to log in account
       const response = await fetch('/accountManager', {
@@ -36,13 +48,7 @@ const SignIn = () => {
         body: JSON.stringify(data)
       });
 
-      if (response.ok) {
-        // SUCCESS -> go to main page
-        history.push('/App');
-      } else {
-	//ERROR MESSAGE
-        //console.error('Error:', response.statusText);
-      }
+      
     } catch (error) {
       //ERROR MESSAGE
       //console.error('Error:', error);

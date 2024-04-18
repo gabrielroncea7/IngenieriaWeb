@@ -2,8 +2,14 @@ import axios from 'axios'
 
 const signUp = (user) => {
     return axios
-            .post('apiSignUp')
+            .post('apiSignUp',user)
             .then(response => response.status == 200 ? true : false )
 }
 
-export default signUp
+const signIn = (user) => {
+    return axios
+            .post('apiLog', user)
+            .then(response => response)
+}
+
+export default {signUp, signIn}

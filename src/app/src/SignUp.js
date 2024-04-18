@@ -25,7 +25,7 @@ function SignUp() {
 	//const hashedPassword = sha256(password);
 
   	const data = { username, email, password }; //if want encrypted password, password: hashedPassword
-	signUp(data)
+	  signUp(data)
   };
 
 const elements = [
