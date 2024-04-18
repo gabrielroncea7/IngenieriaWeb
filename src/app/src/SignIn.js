@@ -37,22 +37,6 @@ const SignIn = () => {
           //console.error('Error:', response.statusText);
         }
       })
-
-    try {
-	//returns account data to account manager to log in account
-      const response = await fetch('/accountManager', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      
-    } catch (error) {
-      //ERROR MESSAGE
-      //console.error('Error:', error);
-    }
   };
 
 	const signInForm = {
