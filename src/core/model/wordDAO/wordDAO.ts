@@ -1,25 +1,26 @@
 import WordSchema from '../Schema/WordSchema';
 import mongoose from 'mongoose';
+import { Word } from '../../domain/word/Word';
 
-class WordDAO{ //CUANDO SE DISPONGA DE LA CLASE WORD SE MODIFICARA PARA QUE LOS GET DEVUELVAN EL OBJETO
+class WordDAO{
 
     constructor(){
 
     }
 
-    public async getWord(){
+    public async getWord(){ //DEVUELVE UN JSON CON TODAS LAS PALABRAS DE LA COLECCION WORD
 
         this.ConnectDB();
 
         const word = await WordSchema.find();
 
-        console.log(word);
-
         this.DisconnectDB();
+
+        return word;
     
     }
 
-    public async setWord(palabra: string){
+    public async setWord(palabra: string){ //OK
 
         this.ConnectDB();
 
@@ -51,7 +52,7 @@ class WordDAO{ //CUANDO SE DISPONGA DE LA CLASE WORD SE MODIFICARA PARA QUE LOS 
     
     }
 
-    public async getWordbyid(id: string){
+    public async getWordbyid(id: string){ //OK
 
         this.ConnectDB();
 
@@ -59,9 +60,15 @@ class WordDAO{ //CUANDO SE DISPONGA DE LA CLASE WORD SE MODIFICARA PARA QUE LOS 
     
         if(foundword){
 
-            console.log(foundword);
+            //transformamos el schema a objeto word
+
+            const fecha : Date = foundword.createdAt;
+
+            const word = new Word(foundword._word || "", fecha); //hay que poner el "" porque detecta _word como undefined
 
             this.DisconnectDB();
+
+            return word;
     
         }
         else{
@@ -69,6 +76,8 @@ class WordDAO{ //CUANDO SE DISPONGA DE LA CLASE WORD SE MODIFICARA PARA QUE LOS 
             console.log('No se ha encontrado la palabra en la BD');
 
             this.DisconnectDB();
+
+            return false;
     
         }
     

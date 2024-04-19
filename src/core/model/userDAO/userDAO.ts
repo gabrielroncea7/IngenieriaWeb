@@ -14,7 +14,7 @@ class UserDAO {
 
     }
 
-    public async getUserbyname(name: string){
+    public async getUserbyname(name: string){ //OK
 
         this.ConnectDB(); //conectamos al la base de datos
 
@@ -36,6 +36,7 @@ class UserDAO {
             const email = new Email(userfound._email || "");
             const user = new User("", "", email, "", 0, 0, 0);
 
+            user.setId(userfound._id.toString()); //id del usuario
             user.setUsername(userfound._username || ""); //se pone la segunda opción porque es tipo undefined 
             user.setEmail(email); //se pone solo una opcion porque arriba se esta creando o dejando vacia según el valor de userfound
             user.setPassword(userfound._password || "");
@@ -53,20 +54,18 @@ class UserDAO {
 
     }
 
-    public async setUser(username: string, email: string, password: string, points: number, wins: number, gamesPlayed: number){ //NO ESTA DEFINITIVO NECESITO LA CLASE USER PARA DEJARLO TERMINADO
+    public async setUser(username: string, email: string, password: string, points: number, wins: number, gamesPlayed: number){ //OK
 
         this.ConnectDB(); //conectamos la base de datos
 
         const user = new UserSchema();
 
-        user._username = username; //como no tengo el objeto de la clase USER asignare a la plantilla los valores manualmente
+        user._username = username;
         user._email = email;
         user._password = password;
         user._points = points;
         user._wins = wins;
         user._gamesPlayed = gamesPlayed;
-
-        //en el futuro se puede indicar directamente el objeto o si Mongoose no lo permite se hara la misma equivalencia anterior utilizando el objeto de la clase USER en vez de los valores uno a uno
 
         try{
 
@@ -88,7 +87,7 @@ class UserDAO {
 
     }
 
-    public async deleteUser(id: string){
+    public async deleteUser(id: string){ //OK
 
         this.ConnectDB(); //conectamos la base de datos
 
@@ -115,7 +114,25 @@ class UserDAO {
 
     }
 
-    private async ConnectDB(){
+    public async updateUser(updatedUser: User){ //es como un set user pero con id incluido ya que se debe usar para actualizar los ya existentes ////OK
+
+        //conectamos la base de datos
+
+        this.ConnectDB();
+
+        //hacemos delete del usuario
+
+        this.deleteUser(updatedUser.getId()); //aqui podemos utilizar el string id del usuario recibido
+        
+        //introducimos el usuario con los datos nuevos
+
+        const result = this.setUser(updatedUser.getUsername(), updatedUser.getEmail().get(), updatedUser.getPassword(), updatedUser.getPoints(), updatedUser.getWins(), updatedUser.getGamesPlayed());
+
+        return result;
+
+    }
+
+    private async ConnectDB(){ //OK
 
         try{
     
@@ -132,7 +149,7 @@ class UserDAO {
         }
     }
 
-    private async DisconnectDB(){
+    private async DisconnectDB(){ //OK
 
         try{
 
