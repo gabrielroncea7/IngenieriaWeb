@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Instructions from './components/instructions/Instructions';
+import Button from './components/button/Button';
 
 
 const Game = () => {
