@@ -20,9 +20,10 @@ const Game = () => {
 
     
 
-
-    <Button text="Instructions" onClick={openIns} />
-    <Instructions isOpen={isOpen} onClose={closeIns} />
+    <>
+      <Button text="Instructions" onClick={openIns} />
+      <Instructions isOpen={isOpen} onClose={closeIns} />
+    </>
   );
   
 }
