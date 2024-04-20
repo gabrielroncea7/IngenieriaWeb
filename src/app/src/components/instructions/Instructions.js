@@ -1,21 +1,19 @@
 import React from 'react';
 import "./Instructions.css";
 import Button from '../button/Button';
-//to send user to game page
-import { useHistory } from 'react-router-dom';
+//CREATE POP SUP WINDOWS
+import Modal from 'react-modal';
 
-function Instructions = () => {
-
-  //activate search history to go to x page
-  const history = useHistory();
-
-  //go back to game pushes game to the history -> sends user to game page with game exact path
-  const goback = () => {
-    history.push('/game');
-  };
+function Instructions = ({ isOpen, onClose }) => {
 
   //returns text with instructions
   return (
+    <!-- open and close the window with the instructions-->
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      ariaHideApp={false}
+    >
     <div>
       <h2>Game Instructions</h2>
       <p>
@@ -39,8 +37,9 @@ function Instructions = () => {
         </ol>
       </p>
       <p>Compete with your friends to get as many points as possible!</p>
-      <Button text="Go back to Game" onClick={goback} />
+      <Button text="Close instructions and go back to Game" onClick={onClose} />
     </div>
+    </Modal>
   );
   
 };
