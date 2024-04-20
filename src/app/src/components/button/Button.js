@@ -12,7 +12,7 @@ function Button(props) {
   const { text, onClick, type } = props;
 
   return (
-    <button onClick={onClick} type={type}>{text}</button>
+    <button className='button' onClick={onClick} type={type}>{text}</button>
   );
 }
 

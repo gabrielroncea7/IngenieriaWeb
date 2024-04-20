@@ -4,18 +4,30 @@ at center and 20px font
 When hovered over -> turns darker after 0.5 seconds
 When clicked -> turns lighter*/
 
-Button {
+.button {
+    display:flex;
+    padding:0.35em 1.2em;
     color: white;
-    background-color: green;
-    text-align: center;
-    font-size: 20 px;
+    background-color: #33b137;
+    font-size: 150%;
+    border:0.1em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-weight:300;
+    text-align:center;
+    transition: all 0.2s;
 }
 
-.Button:hover {
-    background-color: rgb(0, 80, 0);
+.button:hover {
+    background-color: #4dd352;
     transition: 0.5 s;
 }
 
-.Button:active {
-    background-color: rgb(80, 250, 80);
+@media all and (max-width:30em){
+    .button{
+        display:block;
+        margin:0.4em auto;
+    }
 }
