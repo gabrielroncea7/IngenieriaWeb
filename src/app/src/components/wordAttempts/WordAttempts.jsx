@@ -1,10 +1,10 @@
 import Word from "../word/Word"
 import './WordAttempt.css'
 
-const WordAttempts = (attempts, size) => {
+const WordAttempts = (attempts) => {
     return (
         <div className="wordAttempts">
-            {attempts.map((word, i) => <Word key={'attempt' + i} word={word} size={size}/>)}
+            {attempts.map((word, i) => <Word key={'attempt' + i} word={word}/>)}
         </div>
     )
 }
