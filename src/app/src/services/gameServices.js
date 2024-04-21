@@ -9,6 +9,7 @@ const sendWord = (word, attemps) => {
         return {message: "too many attemps"}
     }
 }
+
 const getPoints = (attemps) =>{
     if(attemps < 1 || attemps > 6){
         return {message: "attemps error"}
@@ -17,4 +18,11 @@ const getPoints = (attemps) =>{
         return 100 - (15 * (attemps - 1))
     }
 }
+
+const getSize = () =>{
+    return axios
+            .get('wordsizeendpoint')
+            .then(response => response.data)
+}
+
 export default { sendWord, getPoints }
