@@ -1,22 +1,37 @@
 /*CSS file for Letter component*/
 /* White background and gray letter, when the focus is on it it turns green*/
 
-Letter {
-	color: gray;
-	background-color: white;
-	text-align: left;
+.grayLetter {
+	background-color: #9c9c9c;
+	color: black;
+	text-align: center;
 	font-size: 16 px;
 }
 
-.Letter:hover {
-	border-color: #429f3f;
-	transition: 0.5 s;
+.grayLetter:focus {
+	background-color: #818181;
+	color: black;
+	text-align: center;
+	font-size: 16 px;
 }
 
-.Letter:focus {
-	color: #035300;
-	background-color: #9ff79c;
-	font-size: 18 px;
-	border-color: #57de52;
-	transition: 0.5 s;
+.greenLetter {
+	background-color: #71ff45;
+	color: white;
+	text-align: center;
+	font-size: 16 px;
+}
+
+.yellowLetter {
+	background-color: #ecff45;
+	color: white;
+	text-align: center;
+	font-size: 16 px;
+}
+
+.redLetter {
+	background-color: #ff4545;
+	color: white;
+	text-align: center;
+	font-size: 16 px;
 }

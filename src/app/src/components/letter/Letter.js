@@ -12,16 +12,14 @@ function Letter(props) {
   // check color to know how to color the block
   // if red,yellow,green = color
   // else = gray
-  const backgroundColor = color === 'red' ? 'red' : color === 'yellow' ? 'yellow' : color === 'green' ? 'green' : 'gray';
+  const backgroundColor = color === 'red' ? 'redLetter' : color === 'yellow' ? 'yellowLetter' : color === 'green' ? 'greenLetter' : 'grayLetter';
+
+  const readonly = color === 'red' || color === 'yellow' || color === 'green'
 
   return (
-	<!-- padding: 'x px', margin: 'x px' if needed -->
-    <div style={{ backgroundColor, display: 'inline-block' }}>
-      <!-- font size and bold letter? -->
-      <!-- <span style={{ fontSize: '24px', fontWeight: 'bold' }}> -->
-	{letter}
-      <!-- </span> -->
-    </div>
+    <>
+      <input type='text' maxlength='1' className={backgroundColor} readOnly={readonly}/>
+    </>
   );
 }
 
