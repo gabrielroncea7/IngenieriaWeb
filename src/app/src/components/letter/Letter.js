@@ -5,7 +5,7 @@
 import React from 'react';
 import "./Letter.css";
 
-function Letter({letter}) {
+function Letter({letter, index, onChange}) {
   //get letter and color of letter from sent props
   const { value, color } = letter;
 
@@ -18,7 +18,7 @@ function Letter({letter}) {
 
     return (
       <>
-        <input type='text' maxLength='1' className='grayLetter'/>
+        <input type='text' maxLength='1' className='grayLetter' onChange={event => onChange(event, index)}/>
       </>
     )
   }
