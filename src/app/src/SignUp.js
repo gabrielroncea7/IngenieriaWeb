@@ -38,9 +38,10 @@ const button = { type: 'submit', text: 'Sign Up' };
 	
   return (
     <div>
-      <h2>Create an Account</h2>
-      <Form elements={elements} button={button} onSubmit={handleSubmit} />
-      <p>Do you already have an account? <Link to="/signin">Sign In</Link></p>
+	<Header />
+	<h2>Create an Account</h2>
+	<Form elements={elements} button={button} onSubmit={handleSubmit} />
+	<p>Do you already have an account? <Link to="/signin">Sign In</Link></p>
     </div>
   );
 };
