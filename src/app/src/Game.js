@@ -5,6 +5,7 @@ import WordAttempts from './components/wordAttempts/WordAttempts';
 import './index.css'
 import GameService from './services/gameServices'
 import gameServices from './services/gameServices';
+import Header from './components/header/Header';
 
 
 const Game = () => {
