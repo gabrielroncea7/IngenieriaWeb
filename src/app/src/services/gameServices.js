@@ -1,9 +1,10 @@
 import axios from 'axios'
+
 const sendWord = (word, attemps) => {
     if(attemps <= 6){
         let strWord = ''
 
-        word.array.forEach(element => {
+        word.forEach(element => {
             strWord = strWord + element.value
         });
 

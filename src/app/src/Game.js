@@ -10,7 +10,7 @@ import Header from './components/header/Header';
 
 const Game = () => {
   //controls INSTRUCTIONS pop up window
-  const wordSize = GameService.getSize()
+  const wordSize = 3//GameService.getSize()
 
   const [isOpen, setIsOpen] = useState(false);
   const openIns = () => {
@@ -19,51 +19,6 @@ const Game = () => {
   const closeIns = () => {
     setIsOpen(false);
   };
-
-  const prueba = [
-    [
-      {
-        color: 'red',
-        value: 'A'
-      },
-      {
-        color: 'gray',
-        value: 'A'
-      },
-      {
-        color: 'gray',
-        value: 'A'
-      }
-    ],
-    [
-      {
-        color: 'red',
-        value: 'A'
-      },
-      {
-        color: 'gray',
-        value: 'A'
-      },
-      {
-        color: 'gray',
-        value: 'A'
-      }
-    ],
-    [
-      {
-        color: 'gray',
-        value: 'A'
-      },
-      {
-        color: 'gray',
-        value: 'A'
-      },
-      {
-        color: 'gray',
-        value: 'A'
-      }
-    ]
-  ]
 
   const generateEmptyWord = (size) => {
     let word = []
@@ -76,26 +31,52 @@ const Game = () => {
     return word
   }
 
-  const [attempts, setAttemps] = useState(generateEmptyWord(wordSize))
-  const [currentWord, setCurrentWord] = useState(prueba[prueba.length - 1])
+  const emptyWord = generateEmptyWord(wordSize)
+
+  const [attempts, setAttemps] = useState([[...emptyWord]])
+  const [currentWord, setCurrentWord] = useState([...emptyWord])
 
   const sendHandler = (event) => {
+
     event.preventDefault()
+
     let newAttempt = [...attempts]
     newAttempt.pop()
-    const wordChecked = gameServices.sendWord(currentWord)
-    newAttempt.push(wordChecked)
+    //const wordChecked = gameServices.sendWord(currentWord)
+    //newAttempt.push(wordChecked)
+    newAttempt.push([
+      {
+        color: 'red',
+        value: 'A'
+      },
+      {
+        color: 'red',
+        value: 'A'
+      },
+      {
+        color: 'red',
+        value: 'A'
+      }
+    ])
     
-    if(wordChecked.win){
+    /*if(wordChecked.win){
       //Case user win
       setAttemps(newAttempt)
       setCurrentWord([])
     }
-    else{
-      newAttempt.push(generateEmptyWord(wordSize))
-      setCurrentWord(prueba[prueba.length - 1])
+    else */if(attempts.length == 6){
+      setAttemps(newAttempt)
+      setCurrentWord([])
     }
+    else{
+      newAttempt.push([...emptyWord])
+      setAttemps(newAttempt)
+      setCurrentWord([...emptyWord])
+    }
+
+    console.log(newAttempt)
   }
+
 
   const changeWordHandler = (event, index) => {
     event.preventDefault()
