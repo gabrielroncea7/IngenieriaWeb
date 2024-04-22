@@ -107,6 +107,7 @@ const Game = () => {
 
   return(
     <>
+      <Header>
       <Button text="Instructions" onClick={openIns} />
       <Instructions isOpen={isOpen} onClose={closeIns} />
       <WordAttempts attempts={attempts} onChange={changeWordHandler}/>
