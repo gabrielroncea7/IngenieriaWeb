@@ -1,8 +1,14 @@
 import axios from 'axios'
 const sendWord = (word, attemps) => {
     if(attemps <= 6){
+        let strWord = ''
+
+        word.array.forEach(element => {
+            strWord = strWord + element.value
+        });
+
         return axios
-                .post('apicheck', word)
+                .post('http://localhost:4000/api/game', strWord)
                 .then(response => response.data)
     }
     else{
@@ -10,19 +16,10 @@ const sendWord = (word, attemps) => {
     }
 }
 
-const getPoints = (attemps) =>{
-    if(attemps < 1 || attemps > 6){
-        return {message: "attemps error"}
-    }
-    else{
-        return 100 - (15 * (attemps - 1))
-    }
-}
-
 const getSize = () =>{
     return axios
-            .get('wordsizeendpoint')
+            .get('http://localhost:4000/api/game')
             .then(response => response.data)
 }
 
-export default { sendWord, getPoints }
+export default { sendWord, getSize }

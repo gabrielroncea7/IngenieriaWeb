@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import Instructions from './components/instructions/Instructions';
 import Button from './components/button/Button';
 import WordAttempts from './components/wordAttempts/WordAttempts';
-import Word from './components/word/Word';
 import './index.css'
+import GameService from './services/gameServices'
+import gameServices from './services/gameServices';
 
 
 const Game = () => {
   //controls INSTRUCTIONS pop up window
+  const wordSize = GameService.getSize()
+
   const [isOpen, setIsOpen] = useState(false);
   const openIns = () => {
     setIsOpen(true);
@@ -15,8 +18,6 @@ const Game = () => {
   const closeIns = () => {
     setIsOpen(false);
   };
-
-  
 
   const prueba = [
     [
@@ -63,29 +64,36 @@ const Game = () => {
     ]
   ]
 
-  const [attempts, setAttemps] = useState(prueba)
+  const generateEmptyWord = (size) => {
+    let word = []
+    for (let i = 0 ; i < size ; i++){
+      word.push({
+                  color: 'gray',
+                  value: ''}
+                )
+    }
+    return word
+  }
+
+  const [attempts, setAttemps] = useState(generateEmptyWord(wordSize))
   const [currentWord, setCurrentWord] = useState(prueba[prueba.length - 1])
 
   const sendHandler = (event) => {
+    event.preventDefault()
     let newAttempt = [...attempts]
     newAttempt.pop()
-    newAttempt.push(currentWord)
-    newAttempt.push([
-      {
-        color: 'gray',
-        value: ''
-      },
-      {
-        color: 'gray',
-        value: ''
-      },
-      {
-        color: 'gray',
-        value: ''
-      }
-    ])
-    setAttemps(newAttempt)
-    setCurrentWord(prueba[prueba.length - 1])
+    const wordChecked = gameServices.sendWord(currentWord)
+    newAttempt.push(wordChecked)
+    
+    if(wordChecked.win){
+      //Case user win
+      setAttemps(newAttempt)
+      setCurrentWord([])
+    }
+    else{
+      newAttempt.push(generateEmptyWord(wordSize))
+      setCurrentWord(prueba[prueba.length - 1])
+    }
   }
 
   const changeWordHandler = (event, index) => {
