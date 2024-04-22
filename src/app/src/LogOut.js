@@ -8,7 +8,7 @@ document.cookie = 'sessionToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;
 
   return (
     <div>
-      <Header>
+      <Header />
       <h2>Logged out succesfully</h2>
       <p>Go back to <Link to="/signup">Main Page</Link> to Sign Up or Sign In</p>
     </div>
