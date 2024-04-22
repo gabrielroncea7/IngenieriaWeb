@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 //import { sha256 } from 'js-sha256';
 import Form from './components/form/Form';
 import signIn from './services/accountServices'
+import Header from './components/header/Header';
 
 const SignIn = () => {
 
