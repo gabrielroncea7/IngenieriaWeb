@@ -50,9 +50,10 @@ const SignIn = () => {
 	
   return (
     <div>
-      <h2>Sign into an Account</h2>
-      <Form {...signInForm} onSubmit={handleSubmit} />
-      <p>Do you want to create an account? <Link to="/signup">Sign Up</Link></p>
+	<Header />
+	<h2>Sign into an Account</h2>
+	<Form {...signInForm} onSubmit={handleSubmit} />
+	<p>Do you want to create an account? <Link to="/signup">Sign Up</Link></p>
     </div>
   );
 };
