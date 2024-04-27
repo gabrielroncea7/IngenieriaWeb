@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 //import { sha256 } from 'js-sha256';
 import Form from './components/form/Form';
 import signUp from './services/accountServices';
+import Header from './components/header/Header';
 
 
 function SignUp() {
@@ -37,9 +38,10 @@ const button = { type: 'submit', text: 'Sign Up' };
 	
   return (
     <div>
-      <h2>Create an Account</h2>
-      <Form elements={elements} button={button} onSubmit={handleSubmit} />
-      <p>Do you already have an account? <Link to="/signin">Sign In</Link></p>
+	<Header />
+	<h2>Create an Account</h2>
+	<Form elements={elements} button={button} onSubmit={handleSubmit} />
+	<p>Do you already have an account? <Link to="/signin">Sign In</Link></p>
     </div>
   );
 };

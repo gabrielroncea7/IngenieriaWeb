@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 //import { sha256 } from 'js-sha256';
 import Form from './components/form/Form';
 import signIn from './services/accountServices'
+import Header from './components/header/Header';
 
 const SignIn = () => {
 
@@ -49,9 +50,10 @@ const SignIn = () => {
 	
   return (
     <div>
-      <h2>Sign into an Account</h2>
-      <Form {...signInForm} onSubmit={handleSubmit} />
-      <p>Do you want to create an account? <Link to="/signup">Sign Up</Link></p>
+	<Header />
+	<h2>Sign into an Account</h2>
+	<Form {...signInForm} onSubmit={handleSubmit} />
+	<p>Do you want to create an account? <Link to="/signup">Sign Up</Link></p>
     </div>
   );
 };

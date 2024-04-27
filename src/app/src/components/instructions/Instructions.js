@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Instructions.css";
 import Button from '../button/Button';
-//CREATE POP SUP WINDOWS
+//CREATE POP UP WINDOW
 import Modal from 'react-modal';
 
 const Instructions = ({ isOpen, onClose }) => {
@@ -35,6 +35,12 @@ const Instructions = ({ isOpen, onClose }) => {
               <li>Red block: The letter doesn't appear in the word</li>
               <li>Yellow block: The letter appears in the word but is in the wrong position</li>
               <li>Green block: The letter appears in the word and is in the correct position</li>
+            </ol>
+          <p>How to play</p>
+            <ol>
+              <li>Click on a block</li>
+              <li>Enter a letter</li>
+              <li>Try to guess the word of the day!</li>
             </ol>
           <p>Compete with your friends to get as many points as possible!</p>
         </div>

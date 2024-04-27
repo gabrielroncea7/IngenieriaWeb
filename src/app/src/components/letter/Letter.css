@@ -2,36 +2,53 @@
 /* White background and gray letter, when the focus is on it it turns green*/
 
 .grayLetter {
-	background-color: #9c9c9c;
-	color: black;
+	background-color: #e4e4e4;
+	color: white;
+	text-shadow: 0px 0px 0.05em black;
 	text-align: center;
-	font-size: 16 px;
+	font-size: 2em;
+	text-decoration-style: solid;
+	width: 2em;
+	height: 2em;
+	margin: 0.5em;
 }
 
 .grayLetter:focus {
-	background-color: #818181;
-	color: black;
-	text-align: center;
-	font-size: 16 px;
+	background-color: #e4e4e4;
 }
 
 .greenLetter {
-	background-color: #71ff45;
+	background-color: #8fff6c;
 	color: white;
+	text-shadow: 0px 0px 0.05em black;
 	text-align: center;
-	font-size: 16 px;
+	font-size: 2em;
+	text-decoration-style: solid;
+	width: 2em;
+	height: 2em;
+	margin: 0.5em;
 }
 
 .yellowLetter {
-	background-color: #ecff45;
+	background-color: #f4ff8e;
 	color: white;
+	text-shadow: 0px 0px 0.05em black;
 	text-align: center;
-	font-size: 16 px;
+	font-size: 2em;
+	text-decoration-style: solid;
+	width: 2em;
+	height: 2em;
+	margin: 0.5em;
 }
 
 .redLetter {
-	background-color: #ff4545;
+	background-color: #ff7171;
 	color: white;
+	text-shadow: 0px 0px 0.05em black;
 	text-align: center;
-	font-size: 16 px;
+	font-size: 2em;
+	text-decoration-style: solid;
+	width: 2em;
+	height: 2em;
+	margin: 0.5em;
 }
