@@ -1,7 +1,9 @@
 import GameManager from '../gameManager'
+import UserDAO from '../../../model/userDAO/userDAO';
 
 describe('GameManager', () => {
     let gameManager: GameManager;
+    let userDAO: UserDAO
 
     beforeEach(() => {
         gameManager = new GameManager();
@@ -58,5 +60,18 @@ describe('GameManager', () => {
 
         // Verificar que se obtengan los usuarios esperados
         expect(points).toEqual(-1);
+    })
+    it('Add points test', async ()=>{
+        const user1 = userDAO.find('testUser')
+        gameManager.addPoints(85)
+        const user2 = userDAO.find('testUser')
+        expect(user2.getPoints()).toEqual(user1.getPoints() + 85);
+    })
+    it('Generate word', async ()=>{
+        const max = 10
+        const min = 5
+        const word = gameManager.generateWord()
+        expect(word.get().length).toBeGreaterThanOrEqual(min)
+        expect(word.get().length).toBeLessThanOrEqual(max)
     })
 })
