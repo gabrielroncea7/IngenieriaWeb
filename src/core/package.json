@@ -15,7 +15,9 @@
   "license": "ISC",
   "dependencies": {
     "@types/nodemon": "^1.19.6",
+    "axios": "^1.6.8",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "mongoose": "^8.3.2",
     "ts-node": "^10.9.2"
   },
