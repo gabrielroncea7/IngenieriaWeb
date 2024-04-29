@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest",
     "start": "ts-node index.ts",
-    "server": "nodemon index.ts"
+    "server": "nodemon index.ts",
+    "startapilogin": "ts-node api/loginAPI.ts",
+    "startapiregister": "ts-node api/registerAPI.ts"
   },
   "keywords": [],
   "author": "",

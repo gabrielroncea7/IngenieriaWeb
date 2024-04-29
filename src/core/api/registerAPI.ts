@@ -7,18 +7,23 @@ const PORT = 3000;
 app.use(express.json());
 
 // Endpoint para manejar el registro de usuarios
-app.post('/register', (req: Request, res: Response) => {
-    const { username, email, password } = req.body;
+app.post('/api/signup', (req: Request, res: Response) => {
+    const user = req.body;
 
-    // Validación simple de los campos (esto es solo un ejemplo, no es seguro)
-    if (!username || !email || !password) {
-        return res.status(400).json({ message: 'Se requieren todos los campos: nombre de usuario, correo electrónico y contraseña' });
+    // Aquí puedes agregar lógica para registrar al usuario
+    if (isValidUser(user)) {
+        res.status(200).json({ status: 'registered' });
+    } else {
+        res.status(400).json({ status: 'error' });
     }
-
-    // Aquí puedes agregar lógica para guardar el usuario en una base de datos, etc.
-
-    res.status(200).json({ message: 'Usuario registrado exitosamente' });
 });
+
+// Función para verificar si el usuario es válido (ejemplo)
+function isValidUser(user: any): boolean {
+    // Esto es solo un ejemplo, puedes implementar tu propia lógica de validación
+    const { username, email, password } = user;
+    return username && email && password; // Verificar que los campos obligatorios estén presentes
+}
 
 // Iniciar el servidor
 app.listen(PORT, () => {
