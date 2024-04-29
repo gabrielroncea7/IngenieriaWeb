@@ -5,13 +5,14 @@
 
 
 import React from 'react';
+import "./Button.css";
 
 function Button(props) {
 //extracts the vaue of the text and the onClick action of the button
   const { text, onClick, type } = props;
 
   return (
-    <button onClick={onClick} type={type}>{text}</button>
+    <button className='button' onClick={onClick} type={type}>{text}</button>
   );
 }
 

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 //ENCRYPT PASSWORD FROM VIEW
-//import { sha256 } from 'js-sha256';
+import { sha256 } from 'js-sha256';
 import Form from './components/form/Form';
+import signUp from './services/accountServices';
+import Header from './components/header/Header';
 
 
 function SignUp() {
@@ -21,30 +23,10 @@ function SignUp() {
   	event.preventDefault();
 	
 	//ENCRYPT PASSWORD
-	//const hashedPassword = sha256(password);
+	const hashedPassword = sha256(password);
 
-  	const data = { username, email, password }; //if want encrypted password, password: hashedPassword
-	try {
-		//returns account data to account manager to create account
-    		const response = await fetch('/accountManager', {
-			method: 'POST',
-      			headers: {
-        			'Content-Type': 'application/json'
-      			},
-      			body: JSON.stringify(data)
-    		});
-
-    		if (response.ok) {
-			//SUCCESS MESSAGE
-      			//console.log('Data sent successfully');
-    		} else {
-			//ERROR MESSAGE
-      			//console.error('Error:', response.statusText);
-    		}
-  	} catch (error) {
-		//ERROR MESSAGE
-    		//console.error('Error:', error);
-  	}
+  	const data = { username, email, password: hashedPassword };
+	  signUp(data)
   };
 
 const elements = [
@@ -56,9 +38,10 @@ const button = { type: 'submit', text: 'Sign Up' };
 	
   return (
     <div>
-      <h2>Create an Account</h2>
-      <Form elements={elements} button={button} onSubmit={handleSubmit} />
-      <p>Do you already have an account? <Link to="/signin">Sign In</Link></p>
+	<Header />
+	<h2>Create an Account</h2>
+	<Form elements={elements} button={button} onSubmit={handleSubmit} />
+	<p>Do you already have an account? <Link to="/signin">Sign In</Link></p>
     </div>
   );
 };

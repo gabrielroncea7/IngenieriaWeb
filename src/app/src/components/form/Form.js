@@ -6,6 +6,7 @@
 
 
 import React from 'react';
+import "./Form.css";
 import Button from '../button/Button';
 import FormElement from '../formelement/FormElement';
 

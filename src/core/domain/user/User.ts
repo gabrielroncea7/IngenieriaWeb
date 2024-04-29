@@ -2,7 +2,7 @@
 import { Email } from '../email/Email';
 
 export class User {
-    private _id: number;
+    private _id: string;
     private _username: string;
     private _email: Email;
     private _password: string;
@@ -11,7 +11,7 @@ export class User {
     private _gamesPlayed: number;
 
     constructor(
-        id: number,
+        id: string,
         username: string,
         email: Email,
         password: string,
@@ -29,11 +29,11 @@ export class User {
     }
 
     // Getters and setters
-    getId(): number {
+    getId(): string {
         return this._id;
     }
 
-    setId(id: number): void {
+    setId(id: string): void {
         this._id = id;
     }
 

@@ -2,9 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 //FOR NAVIGATION
 import { useNavigate, Link } from 'react-router-dom';
-//ENCRYPT PASSWORD
-//import { sha256 } from 'js-sha256';
+//FOR ENCRYPTION OF PASSWORD
+import { sha256 } from 'js-sha256';
 import Form from './components/form/Form';
+import signIn from './services/accountServices'
+import Header from './components/header/Header';
 
 const SignIn = () => {
 
@@ -22,31 +24,20 @@ const SignIn = () => {
     event.preventDefault();
     
     //ENCRYPT PASSWORD
-    //const hashedPassword = sha256(password);
+    const hashedPassword = sha256(password);
 
-    const data = { username, password }; //if want encrypted password, password: hashedPassword
+    const data = { username, password: hashedPassword };
 
-    try {
-	//returns account data to account manager to log in account
-      const response = await fetch('/accountManager', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      if (response.ok) {
-        // SUCCESS -> go to main page
-        history.push('/App');
-      } else {
-	//ERROR MESSAGE
-        //console.error('Error:', response.statusText);
-      }
-    } catch (error) {
-      //ERROR MESSAGE
-      //console.error('Error:', error);
-    }
+    signIn(data)
+      .then(response => {
+        if (response.status == 200) {
+          // SUCCESS -> go to main page
+          history.push('/App');
+        } else {
+          //ERROR MESSAGE
+          //console.error('Error:', response.statusText);
+        }
+      })
   };
 
 	const signInForm = {
@@ -59,9 +50,10 @@ const SignIn = () => {
 	
   return (
     <div>
-      <h2>Sign into an Account</h2>
-      <Form {...signInForm} onSubmit={handleSubmit} />
-      <p>Do you want to create an account? <Link to="/signup">Sign Up</Link></p>
+	<Header />
+	<h2>Sign into an Account</h2>
+	<Form {...signInForm} onSubmit={handleSubmit} />
+	<p>Do you want to create an account? <Link to="/signup">Sign Up</Link></p>
     </div>
   );
 };

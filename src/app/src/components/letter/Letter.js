@@ -3,25 +3,32 @@
 // If no color: gray
 
 import React from 'react';
+import "./Letter.css";
 
-function Letter(props) {
+function Letter({letter, index, onChange}) {
   //get letter and color of letter from sent props
-  const { letter, color } = props;
+  const { value, color } = letter;
 
   // check color to know how to color the block
   // if red,yellow,green = color
   // else = gray
-  const backgroundColor = color === 'red' ? 'red' : color === 'yellow' ? 'yellow' : color === 'green' ? 'green' : 'gray';
+  const backgroundColor = color === 'red' ? 'redLetter' : color === 'yellow' ? 'yellowLetter' : color === 'green' ? 'greenLetter' : 'grayLetter';
 
-  return (
-	<!-- padding: 'x px', margin: 'x px' if needed -->
-    <div style={{ backgroundColor, display: 'inline-block' }}>
-      <!-- font size and bold letter? -->
-      <!-- <span style={{ fontSize: '24px', fontWeight: 'bold' }}> -->
-	{letter}
-      <!-- </span> -->
-    </div>
-  );
+  if(backgroundColor === 'grayLetter'){
+
+    return (
+      <>
+        <input type='text' maxLength='1' className='grayLetter' onChange={event => onChange(event, index)}/>
+      </>
+    )
+  }
+  else{
+    return (
+      <>
+        <input type='text' maxLength='1' className={backgroundColor} readOnly value={value}/>
+      </>
+    )
+  }
 }
 
 export default Letter;

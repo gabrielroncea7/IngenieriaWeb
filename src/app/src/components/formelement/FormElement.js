@@ -7,6 +7,7 @@
 
 
 import React from 'react';
+import "./FormElement.css";
 
 function FormElement(props) {
 //extract type, name and requited aspect of element
