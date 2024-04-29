@@ -2,7 +2,7 @@
 
 # Run back-end
 cd  src/core
-npm start &
+npm run server &
 pid1=$!
 
 # Run front-end
