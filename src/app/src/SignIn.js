@@ -2,8 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 //FOR NAVIGATION
 import { useNavigate, Link } from 'react-router-dom';
-//ENCRYPT PASSWORD
-//import { sha256 } from 'js-sha256';
+//FOR ENCRYPTION OF PASSWORD
+import { sha256 } from 'js-sha256';
 import Form from './components/form/Form';
 import signIn from './services/accountServices'
 import Header from './components/header/Header';
@@ -24,9 +24,9 @@ const SignIn = () => {
     event.preventDefault();
     
     //ENCRYPT PASSWORD
-    //const hashedPassword = sha256(password);
+    const hashedPassword = sha256(password);
 
-    const data = { username, password }; //if want encrypted password, password: hashedPassword
+    const data = { username, password: hashedPassword };
 
     signIn(data)
       .then(response => {
