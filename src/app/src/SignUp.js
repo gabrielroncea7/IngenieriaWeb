@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 //ENCRYPT PASSWORD FROM VIEW
-//import { sha256 } from 'js-sha256';
+import { sha256 } from 'js-sha256';
 import Form from './components/form/Form';
 import signUp from './services/accountServices';
 import Header from './components/header/Header';
@@ -23,9 +23,9 @@ function SignUp() {
   	event.preventDefault();
 	
 	//ENCRYPT PASSWORD
-	//const hashedPassword = sha256(password);
+	const hashedPassword = sha256(password);
 
-  	const data = { username, email, password }; //if want encrypted password, password: hashedPassword
+  	const data = { username, email, password: hashedPassword };
 	  signUp(data)
   };
 
