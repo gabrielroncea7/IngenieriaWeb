@@ -6,27 +6,39 @@ import { Email } from '../../domain/email/Email';
 
 dotenv.config(); //para que detecte el archivo .env y localice la URI de la BD para la conexion
 
-class UserDAO {
+class UserDAO { //PATRON SINGLETON PARA EVITAR PROBLEMAS DE CONEXION
 
-    constructor(){
+    private static instance: UserDAO;
 
+    private constructor(){
 
+        
 
     }
 
-    public async getUserbyname(name: string){ //OK
+    public static getInstance(): UserDAO { //utilizamos el patron de diseño singleton para evitar problemas con la conexion/desconexion de los datos
 
-        this.ConnectDB(); //conectamos al la base de datos
+        if(!UserDAO.instance){
 
-        const userfound = await UserSchema.findOne({_username: name}); 
+            UserDAO.instance = new UserDAO(); //unica vez que se crea UserDAO
 
-        if(!userfound){
+            this.instance.ConnectDB(); //conectamos la BD solo cuando el objeto se crea por primera vez, la conexion queda establecida
+
+        }
+
+        return UserDAO.instance; //devuelve UserDAO a donde se necesario su uso pero siempre la misma instancia
+
+    }
+
+    public async find(name: string){ //RECIBE NOMBRE DE USUARIO EN CADENA STRING Y RETORNA EL USUARIO EN TIPO USER
+
+        const userfound = await UserSchema.findOne({_username: name});
+
+        if(!userfound){ 
 
             console.log('No se ha encontrado el usuario en la BD');
 
-            this.DisconnectDB(); //desconectamos la base de datos
-
-            return false;
+            return null;
 
         }
         else{
@@ -44,19 +56,27 @@ class UserDAO {
             user.setWins(userfound._wins || 0);
             user.setGamesPlayed(userfound._gamesPlayed || 0);
 
-            this.DisconnectDB(); //desconectamos la base de datos
-
             return user;
 
         }
 
-       
-
     }
 
-    public async setUser(username: string, email: string, password: string, points: number, wins: number, gamesPlayed: number){ //OK
+    public async addUser(username: string, email: string, password: string, points: number, wins: number, gamesPlayed: number){ //REDCIBE LOS PARAMETROS DE UN USUARIO Y LO INSERTA EN LA BD RETORNA BOOLEANO
 
-        this.ConnectDB(); //conectamos la base de datos
+        //comprobamos que el usuario no exista anteriormente
+
+        const useralreadyinBD = await UserSchema.findOne({_username: username});
+
+        if(useralreadyinBD){ //si el usuario se ha encontrado no es necesario introducirlo en la BD
+
+            console.log("El usuario ya se encuentra en la BD");
+
+            return false;
+
+        }
+
+        //realizamos el proceso para introducir el usuario en la BD
 
         const user = new UserSchema();
 
@@ -71,13 +91,9 @@ class UserDAO {
 
             await user.save();
 
-            this.DisconnectDB(); //desconectamos la base de datos
-
             return true;
 
         }catch(error){
-
-            this.DisconnectDB(); //desconectamos la base de datos
 
             console.log(error);
 
@@ -87,17 +103,13 @@ class UserDAO {
 
     }
 
-    public async deleteUser(id: string){ //OK
+    public async delete(name: string){ //RECIBE EL NOMBRE EN CADENA STRING Y LO ELIMINA DE LA BASE DE DATOS RETORNA BOOLEANO
 
-        this.ConnectDB(); //conectamos la base de datos
-
-        const usertodelete = await UserSchema.findById(id);
+        const usertodelete = await UserSchema.findOne({_username: name});
 
         if(usertodelete){
 
             await UserSchema.findByIdAndDelete(usertodelete._id);
-
-            this.DisconnectDB(); //desconectamos la base de datos
 
             return true;
 
@@ -105,8 +117,6 @@ class UserDAO {
         else{
 
             console.log('No se ha encontrado el usuario');
-
-            this.DisconnectDB(); //desconectamos la base de datos
 
             return false;
 
@@ -116,17 +126,13 @@ class UserDAO {
 
     public async updateUser(updatedUser: User){ //es como un set user pero con id incluido ya que se debe usar para actualizar los ya existentes ////OK
 
-        //conectamos la base de datos
-
-        this.ConnectDB();
-
         //hacemos delete del usuario
 
-        this.deleteUser(updatedUser.getId()); //aqui podemos utilizar el string id del usuario recibido
+        this.delete(updatedUser.getUsername()); //aqui podemos utilizar el string id del usuario recibido
         
         //introducimos el usuario con los datos nuevos
 
-        const result = this.setUser(updatedUser.getUsername(), updatedUser.getEmail().get(), updatedUser.getPassword(), updatedUser.getPoints(), updatedUser.getWins(), updatedUser.getGamesPlayed());
+        const result = this.addUser(updatedUser.getUsername(), updatedUser.getEmail().get(), updatedUser.getPassword(), updatedUser.getPoints(), updatedUser.getWins(), updatedUser.getGamesPlayed());
 
         return result;
 
@@ -137,7 +143,9 @@ class UserDAO {
         try{
     
             await mongoose.connect(process.env.MONGODB_URI || ""); //process.env.MONGODB_URI es una variable de entorno que se encuentra en src/core/.env, se pone el || "" pork podria ser undefined (NUNCA lo sera en este caso)
-    
+
+            console.log("La base de datos se ha conectado");
+
             return true;
     
         }catch(error){
@@ -154,6 +162,8 @@ class UserDAO {
         try{
 
             await mongoose.disconnect();
+
+            console.log("la BD se ha desconectado");
 
             return true;
 

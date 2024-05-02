@@ -1,28 +1,43 @@
 import WordSchema from '../Schema/WordSchema';
 import mongoose from 'mongoose';
 import { Word } from '../../domain/word/Word';
+import dotenv from 'dotenv';
 
-class WordDAO{
+dotenv.config(); //para poder usar la variable de entorno de la MONGODB_URI
 
-    constructor(){
+
+class WordDAO{ //PATRON SINGLETON PARA EVITAR PROBLEMAS CON CONEXION
+
+    private static instance: WordDAO;
+
+    private constructor(){
+
 
     }
 
-    public async getWord(){ //DEVUELVE UN JSON CON TODAS LAS PALABRAS DE LA COLECCION WORD
+    public static getInstance(): WordDAO{ //PATRON SINGLETON
 
-        this.ConnectDB();
+        if(!WordDAO.instance){
+
+            WordDAO.instance = new WordDAO();
+
+            this.instance.ConnectDB();
+
+        }
+
+        return WordDAO.instance;
+
+    }
+
+    public async getWords(){ //DEVUELVE UN JSON CON TODAS LAS PALABRAS DE LA COLECCION WORD
 
         const word = await WordSchema.find();
-
-        this.DisconnectDB();
 
         return word;
     
     }
 
-    public async setWord(palabra: string){ //OK
-
-        this.ConnectDB();
+    public async addWord(palabra: string){ //OK
 
         const word = new WordSchema();
 
@@ -34,8 +49,6 @@ class WordDAO{
     
             console.log('La palabra se ha introducido correctamente');
 
-            this.DisconnectDB();
-
             return true;
     
         }catch(error){
@@ -44,41 +57,31 @@ class WordDAO{
     
             console.log('Ha ocurrido un error al insertar la palabra');
 
-            this.DisconnectDB();
-
             return false;
     
         }
     
     }
 
-    public async getWordbyid(id: string){ //OK
+    public async find(){ //METODO QUE DEVUELVE LA ULTIMA PALABRA INTRODUCIDA EN LA BD
 
-        this.ConnectDB();
+        const wordSchema = new WordSchema();
 
-        const foundword = await WordSchema.findById(id);
-    
-        if(foundword){
+        const lastWord = await WordSchema.findOne().sort({ createdAt: -1 });
 
-            //transformamos el schema a objeto word
+        if(!lastWord){
 
-            const fecha : Date = foundword.createdAt;
+            console.log("Error al conseguir la lista de palabras");
 
-            const word = new Word(foundword._word || "", fecha); //hay que poner el "" porque detecta _word como undefined
+            return null;
 
-            this.DisconnectDB();
-
-            return word;
-    
         }
         else{
-    
-            console.log('No se ha encontrado la palabra en la BD');
 
-            this.DisconnectDB();
+            const resultWord = new Word(lastWord._word || "", lastWord.createdAt);
 
-            return false;
-    
+            return resultWord;
+
         }
     
     }
