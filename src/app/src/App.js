@@ -5,6 +5,7 @@ import SignUp from './SignUp';
 import SignIn from './SignIn';
 import LogOut from './LogOut'
 import Game from './Game';
+import Profile from '/Profile';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/signin" element={<SignIn/>} />
           <Route exact path="/game" element={<Game/>} />
           <Route exact path="/logout" element={<LogOut/>} />
+          <Route exact path="/profile" element={<Profile/>} />
         </Routes>
       </Router>
     </>
