@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
+//FOR STORING USERNAME, FOR PROFILE
+import Cookies from 'js-cookie';
 //FOR NAVIGATION
 import { useNavigate, Link } from 'react-router-dom';
 //FOR ENCRYPTION OF PASSWORD
@@ -31,11 +33,15 @@ const SignIn = () => {
     signIn(data)
       .then(response => {
         if (response.status == 200) {
-          // SUCCESS -> go to main page
+	  // get username from signin form
+	  const user = { username: username };
+    	  // store username in cookies to use in profile
+    	  Cookies.set('user', user);
+	  // SUCCESS -> go to main page
           history.push('/App');
         } else {
           //ERROR MESSAGE
-          //console.error('Error:', response.statusText);
+          history.push('/ErrorSignIn');
         }
       })
   };
