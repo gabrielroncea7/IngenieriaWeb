@@ -48,7 +48,7 @@ const Profile = () => {
             <div>
               <p>Your username is {username}</p> <!-- MODIFICAR CUANDO ESTÉ USABLE LA PROFILE API -->
               <Button text="Change Username" onClick{openCha} />
-              <ChangeUsername isOpen{isOpen} onClose(closeCha} />
+              <ChangeUsername isOpen{isOpen} onClose{closeCha} />
             </div>
   
             <!-- PONER ESTADISTICAS DE JUEGO -->
