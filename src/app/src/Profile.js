@@ -30,6 +30,9 @@ const Profile = () => {
           <p><Link to="/game">Play Game</Link></p>
           <p><Link to="/logout">Log out</Link></p>
         </div>
+        <div>
+          <p><Link to ="deleteprofile">Delete profile</Link></p>
+        </div>
       </div>
   );
 };
