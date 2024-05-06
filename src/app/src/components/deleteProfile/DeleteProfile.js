@@ -1,5 +1,5 @@
 import React from 'react';
-import "./deleteProfile.css";
+import "./DeleteProfile.css";
 import Button from '../button/Button';
 //CREATE POP UP WINDOW
 import Modal from 'react-modal';
