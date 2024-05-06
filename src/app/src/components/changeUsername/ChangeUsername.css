@@ -1,0 +1,18 @@
+/*CSS file for ChangeUsername component*/
+/*White background with gray letters, turns green when hovered and focus*/
+
+.text {
+	color: #363636;
+	background-color: white;
+	text-align: left;
+	font-size: 160%;
+	display: block;
+}
+
+.header {
+	color: white;
+	text-align: center;
+	font-size: 300%;
+	display: block;
+	background-color: #33b137;
+}
