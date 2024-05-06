@@ -11,7 +11,7 @@ import './index.css'
 
 const Profile = () => {
 //controls the profile deletion pop up confirmation window
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenDel, setIsOpen] = useState(false);
   const openDel = () => {
     setIsOpen(true);
   };
@@ -19,7 +19,7 @@ const Profile = () => {
     setIsOpen(false);
   };
 //controls the change username pop up window
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenCha, setIsOpen] = useState(false);
   const openCha = () => {
     setIsOpen(true);
   };
@@ -48,7 +48,7 @@ const Profile = () => {
             <div>
               <p>Your username is {username}</p> <!-- MODIFICAR CUANDO ESTÉ USABLE LA PROFILE API -->
               <Button text="Change Username" onClick{openCha} />
-              <ChangeUsername isOpen{isOpen} onClose{closeCha} />
+              <ChangeUsername isOpen{isOpenCha} onClose{closeCha} />
             </div>
   
             <!-- PONER ESTADISTICAS DE JUEGO -->
@@ -65,7 +65,7 @@ const Profile = () => {
         </div>
         <div>
           <Button text="Delete Profile" onClick={openDel} />
-          <DeleteProfile isOpen={isOpen} onClose={closeDel} />
+          <DeleteProfile isOpen={isOpenDel} onClose={closeDel} />
         </div>
       </div>
   );
