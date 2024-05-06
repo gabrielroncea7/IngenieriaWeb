@@ -4,6 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import Cookies from 'js-cookie'; //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
 import Header from './components/header/Header';
 import Button from './components/button/Button';
+import DeleteProfile from './components/deleteProfile/DeleteProfile';
+import ChangeUsername from './components/changeUsername/ChangeUsername';
 import './index.css'
 
 
@@ -14,6 +16,14 @@ const Profile = () => {
     setIsOpen(true);
   };
   const closeDel = () => {
+    setIsOpen(false);
+  };
+//controls the change username pop up window
+  const [isOpen, setIsOpen] = useState(false);
+  const openCha = () => {
+    setIsOpen(true);
+  };
+  const closeCha = () => {
     setIsOpen(false);
   };
 
@@ -35,8 +45,11 @@ const Profile = () => {
       <div>
       	<Header />
       	<h2>My Profile</h2>
-            <p>Your username is {username}</p> <!-- MODIFICAR CUANDO ESTÉ USABLE LA PROFILE API -->
-
+            <div>
+              <p>Your username is {username}</p> <!-- MODIFICAR CUANDO ESTÉ USABLE LA PROFILE API -->
+              <Button text="Change Username" onClick{openCha} />
+              <ChangeUsername isOpen{isOpen} onClose(closeCha} />
+            </div>
   
             <!-- PONER ESTADISTICAS DE JUEGO -->
 
