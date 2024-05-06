@@ -28,7 +28,7 @@ const DeleteProfile = ({ isOpen, onClose }) => {
         <div>
           <p>Click on the 'Delete Profile' button to delete your account forever.</p>
         </div>
-        <Button text="Delete Profile" onClick={//ACCION DE BORRAR PERFIL} />
+        <Button text="Delete Profile" onClick={/* ACCION DE BORRAR PERFIL */} />
         <div>
           <p>If you don't want to delete your account, click on the 'Close Warning Window' button.</p>
         </div>
