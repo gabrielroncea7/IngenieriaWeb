@@ -6,6 +6,7 @@ import SignIn from './SignIn';
 import LogOut from './LogOut'
 import Game from './Game';
 import Profile from '/Profile';
+import ErrorSignIn from '/ErrorSignIn';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/game" element={<Game/>} />
           <Route exact path="/logout" element={<LogOut/>} />
           <Route exact path="/profile" element={<Profile/>} />
+          <Route exact path="/errorsignin" element={<ErrorSignIn/>} />
         </Routes>
       </Router>
     </>
