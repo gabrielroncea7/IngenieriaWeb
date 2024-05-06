@@ -1,27 +1,27 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'; //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
 import Header from './components/header/Header';
 import './index.css'
 
 const Profile = () => {
   // sets variable username to be used as the found name in the cookie
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(''); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
 
-  useEffect(() => {
+  useEffect(() => { //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
     // gets user from the global cookie to access the saved username
-    const user = Cookies.getJSON('user');
-    if (user && user.username) {
-      setUsername(user.username);
-    }
-  }, []);
+    const user = Cookies.getJSON('user'); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
+    if (user && user.username) { //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
+      setUsername(user.username); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
+    } //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
+  }, []); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
 
   return {
       <div>
       	<Header />
       	<h2>My Profile</h2>
-            <p>Your username is {username}</p>
+            <p>Your username is {username}</p> <!-- BORRAR CUANDO ESTÉ USABLE LA PROFILE API -->
 
   
             <!-- PONER ESTADISTICAS DE JUEGO -->
