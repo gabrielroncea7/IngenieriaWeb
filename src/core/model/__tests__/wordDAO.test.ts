@@ -1,52 +1,26 @@
 import WordDAO from '../wordDAO/wordDAO';
+import { Word } from '../../domain/word/Word'
+describe('Pruebas para la clase WordDAO', () => {
+  const wordDAO1 = WordDAO.getInstance();
+  let word1 : Word;
 
-describe('WordDAO', () => {
-  let wordDAO: WordDAO;
 
-  beforeEach(() => {
-    wordDAO = new WordDAO();
+  it('Probar funcion addWord', async()=> {
+    let word= await wordDAO1.addWord('Prueba');
+    expect(word).toEqual(true);
+
+
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
+  it('Probar funcion find (devuelve la última palabra introducida)', async()=> {
+    let word = await wordDAO1.find()
+    expect(word?.get()).toEqual('Prueba');
+
   });
 
-  it('should get a word from the database', async () => {
-    // Mock del método getWord para simular la respuesta de la base de datos
-    jest.spyOn(wordDAO as any, 'ConnectDB').mockImplementationOnce(() => {});
-    jest.spyOn(wordDAO as any, 'DisconnectDB').mockImplementationOnce(() => {});
-    jest.spyOn(wordDAO as any, 'getWord').mockResolvedValueOnce(['word1']);
-
-    // Ejecutar el método que se va a probar
-    const word = await wordDAO.getWord();
-
-    // Verificar que se obtenga la palabra esperada
-    expect(word).toEqual(['word1']);
-  });
-
-  it('should set a new word in the database', async () => {
-    // Mock del método setWord para simular la inserción en la base de datos
-    jest.spyOn(wordDAO as any, 'ConnectDB').mockImplementationOnce(() => {});
-    jest.spyOn(wordDAO as any, 'DisconnectDB').mockImplementationOnce(() => {});
-    jest.spyOn(wordDAO as any, 'setWord').mockResolvedValueOnce(true);
-
-    // Ejecutar el método que se va a probar
-    const result = await wordDAO.setWord('testWord');
-
-    // Verificar que la inserción de la palabra sea exitosa
-    expect(result).toBeTruthy();
-  });
-
-  it('should get word by id from the database', async () => {
-    // Mock del método getWordbyid para simular la respuesta de la base de datos
-    jest.spyOn(wordDAO as any, 'ConnectDB').mockImplementationOnce(() => {});
-    jest.spyOn(wordDAO as any, 'DisconnectDB').mockImplementationOnce(() => {});
-    jest.spyOn(wordDAO as any, 'getWordbyid').mockResolvedValueOnce('word1');
-
-    // Ejecutar el método que se va a probar
-    const word = await wordDAO.getWordbyid('wordId');
-
-    // Verificar que se obtenga la palabra esperada por su id
-    expect(word).toEqual('word1');
-  });
+  it('Probar funcion getWords',async()=> {
+    let words =await wordDAO1.getWords();
+    let words1 = await wordDAO1.getWords();
+    expect(words).toEqual(words1);
+  })
 });
