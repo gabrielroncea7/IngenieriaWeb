@@ -15,7 +15,9 @@ describe('Pruebas para la clase UserDAO', () => {
     email = new Email ('plantilla@gmail.com');
     userDAO3 = new User('661525962ba905c4cb8c05cf','Plantilla',email,'plantillapassword',1,0,0);
   });
-  
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
     it('Probar funcion getUserbyname'  , async() =>{
       const expectedUser = {
