@@ -32,12 +32,12 @@ describe('Pruebas para la clase UserDAO', () => {
   
       // Esperar a que updateUser se complete antes de continuar con la prueba
       await userDAO1.updateUser(userUpdate).then(result => {
-        expect(result).toBe(true);
+        expect(result).toEqual(true);
       });
   
       // Eliminar el usuario actualizado
       await userDAO1.delete('PruebaUpdate').then(result => {
-        expect(result).toBe(true);
+        expect(result).toEqual(true);
       });
     } else {
       console.log('Usuario no encontrado');
