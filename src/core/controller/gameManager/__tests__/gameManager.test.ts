@@ -62,16 +62,47 @@ describe('GameManager', () => {
         expect(points).toEqual(-1);
     })
     it('Add points test', async ()=>{
-        const user1 = userDAO.find('testUser')
-        gameManager.addPoints(85)
-        const user2 = userDAO.find('testUser')
-        expect(user2.getPoints()).toEqual(user1.getPoints() + 85);
-    })
+        const user1 = await userDAO.find('testUser'); 
+        if (user1) { // Verificar si user1 no es null
+            gameManager.addPoints(85);
+            const user2 = await userDAO.find('testUser'); 
+            if (user2) { // Verificar si user2 no es null
+                expect(user2.getPoints()).toEqual(user1.getPoints() + 85);
+            } else {
+                fail('User not found');
+            }
+        } else {
+            fail('User not found');
+        }
+    });
     it('Generate word', async ()=>{
-        const max = 10
-        const min = 5
-        const word = gameManager.generateWord()
-        expect(word.get().length).toBeGreaterThanOrEqual(min)
-        expect(word.get().length).toBeLessThanOrEqual(max)
-    })
-})
+        const max = 10;
+        const min = 5;
+        const word =await gameManager.generateWord();
+        expect(word.get().length).toBeGreaterThanOrEqual(min);
+        expect(word.get().length).toBeLessThanOrEqual(max);
+    });
+
+    it('Test para probar la función getLastGame', async ()=>{
+        const user1 = await userDAO.find('testUser');
+        if(user1){
+            let game = await gameManager.getLastGame('testUser');
+            if (game !== false) {
+                expect(typeof game).toBe('string');
+                expect(game.length).toBeGreaterThan(0);
+                 
+            } else {
+                
+                fail('El juego no fue encontrado en la base de datos');
+                
+            }
+            
+        }
+        else{
+            fail('No se ha encontrado al usuario');
+        }
+
+
+    });
+
+});
