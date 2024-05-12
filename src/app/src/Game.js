@@ -8,10 +8,30 @@ import gameServices from './services/gameServices';
 import Header from './components/header/Header';
 import Message from './components/message/Message';
 
+const generateEmptyWord = (size) => {
+  let word = []
+  for (let i = 0 ; i < size ; i++){
+    word.push({
+                color: 'gray',
+                value: ''}
+              )
+  }
+  return word
+}
 
 const Game = () => {
   //controls INSTRUCTIONS pop up window
-  const wordSize = GameService.getSize()
+  const username = null //GET USERNAME FROM SESSION
+
+  const [wordSize, hasPlayed, game] = GameService
+    .getSize(username)
+    .then(res => {return res.size, res.hasPlayedToday, res.game})
+
+  const emptyWord = generateEmptyWord(wordSize)
+
+  const [attempts, setAttemps] = useState((hasPlayed) ? game.push(...emptyWord) : [[...emptyWord]])
+  const [currentWord, setCurrentWord] = useState([...emptyWord])
+  const [message, setMessage] = useState({message: '', color: ''})
 
   const [isOpen, setIsOpen] = useState(false);
   const openIns = () => {
@@ -21,53 +41,25 @@ const Game = () => {
     setIsOpen(false);
   };
 
-  const generateEmptyWord = (size) => {
-    let word = []
-    for (let i = 0 ; i < size ; i++){
-      word.push({
-                  color: 'gray',
-                  value: ''}
-                )
-    }
-    return word
-  }
-
-  const emptyWord = generateEmptyWord(wordSize)
-
-  const [attempts, setAttemps] = useState([[...emptyWord]])
-  const [currentWord, setCurrentWord] = useState([...emptyWord])
-  const [message, setMessage] = useState({message: '', color: ''})
-
   const sendHandler = (event) => {
 
     event.preventDefault()
 
     let newAttempt = [...attempts]
     newAttempt.pop()
-    const wordChecked = gameServices.sendWord(currentWord)
-    newAttempt.push(wordChecked)
-    newAttempt.push([
-      {
-        color: 'red',
-        value: 'A'
-      },
-      {
-        color: 'red',
-        value: 'A'
-      },
-      {
-        color: 'red',
-        value: 'A'
-      }
-    ])
+    const response = gameServices
+      .sendWord(currentWord, username)
+      .then(res => res)
+
+    newAttempt.push(res.wordChecked)
     
-    if(wordChecked.win){
+    if(res.win){
       //Case user win
       setAttemps(newAttempt)
       setCurrentWord([])
 
       setMessage({
-        message: `Congratulations!!!. Score: ${wordChecked.points}`,
+        message: `Congratulations!!!. Score: ${res.points}`,
         color: 'green'
       })
     }

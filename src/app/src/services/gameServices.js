@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const sendWord = (word, attemps) => {
-    if(attemps <= 6){
+const sendWord = (word, attempts, username) => {
+    if(attempts <= 6){
         let strWord = ''
 
         word.forEach(element => {
@@ -9,17 +9,26 @@ const sendWord = (word, attemps) => {
         });
 
         return axios
-                .post('http://localhost:4000/api/game', strWord)
+                .post('http://localhost:4000/api/game', {
+                    params:{
+                        word: strWord,
+                        username: username
+                    }
+                })
                 .then(response => response.data)
     }
     else{
-        return {message: "too many attemps"}
+        return {message:'too many attempts'}
     }
 }
 
-const getSize = () =>{
+const getSize = (username) =>{
     return axios
-            .get('http://localhost:4000/api/game')
+            .get('http://localhost:4000/api/game',{
+                params:{
+                    username: username
+                }
+            })
             .then(response => response.data)
 }
 
