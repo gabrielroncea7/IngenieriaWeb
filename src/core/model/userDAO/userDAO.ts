@@ -138,6 +138,38 @@ class UserDAO { //PATRON SINGLETON PARA EVITAR PROBLEMAS DE CONEXION
 
     }
 
+    public async findByEmail(email: String){
+
+        const userfound = await UserSchema.findOne({_email: email});
+
+        if(!userfound){
+
+            //no se ha encontrado ningun usuario que utilice ese mail
+
+            return null;
+
+        }
+        else{
+
+            //devolvemos el user
+
+            const email = new Email(userfound._email || "");
+            const user = new User("", "", email, "", 0, 0, 0);
+
+            user.setId(userfound._id.toString()); //id del usuario
+            user.setUsername(userfound._username || ""); //se pone la segunda opción porque es tipo undefined 
+            user.setEmail(email); //se pone solo una opcion porque arriba se esta creando o dejando vacia según el valor de userfound
+            user.setPassword(userfound._password || "");
+            user.setPoints(userfound._points || 0);
+            user.setWins(userfound._wins || 0);
+            user.setGamesPlayed(userfound._gamesPlayed || 0);
+
+            return user;
+
+        }
+
+    }
+
     private async ConnectDB(){ //OK
 
         try{
