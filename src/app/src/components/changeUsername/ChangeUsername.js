@@ -33,7 +33,7 @@ const ChangeUsername = ({ isOpen, onClose }) => {
       }
       else if(res.false){
         setMessage({
-          message: 'There was an error and the account name is not changed'
+          message: 'There was an error and the account name is not changed',
           color: 'red'
         })
       }
