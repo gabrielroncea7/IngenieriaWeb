@@ -2,9 +2,11 @@ import React from 'react';
 import "./ChangeUsername.css";
 import Button from '../button/Button';
 import Form from '../form/Form';
-import Message from './components/message/Message';
+import Message from '../message/Message';
 //CREATE POP UP WINDOW
 import Modal from 'react-modal';
+//PROFILE API??
+import delete from '../services/profileServices';
 
 const ChangeUsername = ({ isOpen, onClose }) => {
 
@@ -12,23 +14,30 @@ const ChangeUsername = ({ isOpen, onClose }) => {
   const handleUsernameChange = (event) => setUsername(event.target.value);
 
   const handleSubmit = async (event) => {
-  //avoid empty form (no data to create account)
+  //avoid empty form (no data to delete account)
     	event.preventDefault();
 
-    	const data = {username};
-    //supongo que la API se llamara profile, tipo signIn y gameServices
-      const response = profile
-      .delete(username)
+      const user = profileServices
+      //id??
+      .get(id)
+      then(res => res)
+    //supongo que la API se llamara profileServices, tipo accountServices y gameServices
+      const response = profileServices
+      .update(user)
       .then(res => res)
-      if(res.true){  
+      if(res.true){
         setMessage({
-          message: `The account has been deleted`,
+          message: `The account name has been changed`,
           color: 'green'
         })
       }
-      
+      else if(res.false){
+        setMessage({
+          message: 'There was an error and the account name is not changed'
+          color: 'red'
+        })
+      }
     };
-
 
   const elements = [
     { type: 'input', name: 'username', placeholder: 'Username', value: username, onchange: handleUsernameChange },
