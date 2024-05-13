@@ -5,8 +5,8 @@ import SignUp from './SignUp';
 import SignIn from './SignIn';
 import LogOut from './LogOut'
 import Game from './Game';
-import Profile from '/Profile';
-import ErrorSignIn from '/ErrorSignIn';
+import Profile from './Profile'
+import ErrorSignIn from './ErrorSignIn';
 
 
 function App() {
