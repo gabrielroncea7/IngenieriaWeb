@@ -2,6 +2,7 @@ import React from 'react';
 import "./ChangeUsername.css";
 import Button from '../button/Button';
 import Form from '../form/Form';
+import Message from './components/message/Message';
 //CREATE POP UP WINDOW
 import Modal from 'react-modal';
 
@@ -14,10 +15,18 @@ const ChangeUsername = ({ isOpen, onClose }) => {
   //avoid empty form (no data to create account)
     	event.preventDefault();
 
-    	const data = { username};
-    
-      //LLAMAR A LA API DE UPDATE PROFILE
-    
+    	const data = {username};
+    //supongo que la API se llamara profile, tipo signIn y gameServices
+      const response = profile
+      .delete(username)
+      .then(res => res)
+      if(res.true){  
+        setMessage({
+          message: `The account has been deleted`,
+          color: 'green'
+        })
+      }
+      
     };
 
 
@@ -43,7 +52,10 @@ const ChangeUsername = ({ isOpen, onClose }) => {
         <div>
           <p>If you don't want to change your username, click on the 'Close Window' button.</p>
         </div>
+        <div>
           <Button text="Close Window" onClick={onClose} />
+          </div>
+          <Message message={message.message} color={message.color} />
       </Modal>
     </>
   );
