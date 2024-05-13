@@ -7,6 +7,7 @@ import GameService from './services/gameServices'
 import gameServices from './services/gameServices';
 import Header from './components/header/Header';
 import Message from './components/message/Message';
+import Menu from './components/menu/Menu';
 
 const generateEmptyWord = (size) => {
   let word = []
@@ -51,15 +52,15 @@ const Game = () => {
       .sendWord(currentWord, username)
       .then(res => res)
 
-    newAttempt.push(res.wordChecked)
+    newAttempt.push(response.wordChecked)
     
-    if(res.win){
+    if(response.win){
       //Case user win
       setAttemps(newAttempt)
       setCurrentWord([])
 
       setMessage({
-        message: `Congratulations!!!. Score: ${res.points}`,
+        message: `Congratulations!!!. Score: ${response.points}`,
         color: 'green'
       })
     }
@@ -93,6 +94,7 @@ const Game = () => {
   return(
     <>
       <Header />
+      <Menu instructionsIsOpen={isOpen} instructionsOnClosed={closeIns}/>
       <Button text="Instructions" onClick={openIns} />
       <Instructions isOpen={isOpen} onClose={closeIns} />
       <WordAttempts attempts={attempts} onChange={changeWordHandler}/>
