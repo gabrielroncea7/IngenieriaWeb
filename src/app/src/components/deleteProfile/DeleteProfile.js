@@ -13,6 +13,7 @@ const DeleteProfile = ({ isOpen, onClose }) => {
     	const data = {username};
     //supongo que la API se llamara profileServices, tipo accountServices y gameServices
       const response = profileServices
+      //HE PUESTO USERNAME PORQUE POR AHORA NO PUEDO SACAR ID
       .delete(username)
       .then(res => res)
       if(res.true){  
