@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Cookies from 'js-cookie'; //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
+import { useCookie} from 'react-cookie'; //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
 import Header from './components/header/Header';
 import Button from './components/button/Button';
 import DeleteProfile from './components/deleteProfile/DeleteProfile';
@@ -11,20 +11,20 @@ import './index.css'
 
 const Profile = () => {
 //controls the profile deletion pop up confirmation window
-  const [isOpenDel, setIsOpen] = useState(false);
+  const [isOpenDel, setIsOpenDel] = useState(false);
   const openDel = () => {
-    setIsOpen(true);
+    setIsOpenDel(true);
   };
   const closeDel = () => {
-    setIsOpen(false);
+    setIsOpenDel(false);
   };
 //controls the change username pop up window
-  const [isOpenCha, setIsOpen] = useState(false);
+  const [isOpenCha, setIsOpenCha] = useState(false);
   const openCha = () => {
-    setIsOpen(true);
+    setIsOpenCha(true);
   };
   const closeCha = () => {
-    setIsOpen(false);
+    setIsOpenCha(false);
   };
 
 
@@ -41,24 +41,15 @@ const Profile = () => {
     } //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
   }, []); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
 
-  return {
+  return (
       <div>
       	<Header />
       	<h2>My Profile</h2>
-            <div>
-              <p>Your username is {username}</p> <!-- MODIFICAR CUANDO ESTÉ USABLE LA PROFILE API -->
-              <Button text="Change Username" onClick{openCha} />
-              <ChangeUsername isOpen{isOpenCha} onClose{closeCha} />
-            </div>
-  
-            <!-- PONER ESTADISTICAS DE JUEGO -->
-
-
-
-
-
-
-  
+        <div>
+          <p>Your username is {username}</p>
+          <Button text="Change Username" onClick={openCha} />
+          <ChangeUsername isOpen={isOpenCha} onClose={closeCha} />
+        </div>  
       	<div>
           <p><Link to="/game">Play Game</Link></p>
           <p><Link to="/logout">Log out</Link></p>
@@ -69,8 +60,6 @@ const Profile = () => {
         </div>
       </div>
   );
-};
-  }
 }
 
 export default Profile;
