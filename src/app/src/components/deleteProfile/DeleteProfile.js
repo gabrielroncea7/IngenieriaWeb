@@ -1,6 +1,7 @@
 import React from 'react';
 import "./DeleteProfile.css";
 import Button from '../button/Button';
+import Button from '../message/Message';
 //CREATE POP UP WINDOW
 import Modal from 'react-modal';
 //PROFILE API??
@@ -58,7 +59,10 @@ const DeleteProfile = ({ isOpen, onClose }) => {
         <div>
           <p>If you don't want to delete your account, click on the 'Close Warning Window' button.</p>
         </div>
+        <div>
           <Button text="Close Warning Window" onClick={onClose} />
+          </div>
+          <Message message={message.message} color={message.color}/>
       </Modal>
     </>
   );
