@@ -6,7 +6,7 @@ import Message from '../message/Message';
 //CREATE POP UP WINDOW
 import Modal from 'react-modal';
 //PROFILE API??
-import delete from '../services/profileServices';
+import update from '../services/profileServices';
 
 const ChangeUsername = ({ isOpen, onClose }) => {
 
