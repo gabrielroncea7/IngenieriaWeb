@@ -20,8 +20,8 @@ const UpperBarProfile = () => {
     const len = str.length;
     if (len > 6) {
       //if username is longer than 6 letters, cut the username and put '...'
-      const aux = '${user.username.substring(0,6)}...'
-      setUsername(username.substring(0,6));
+      const aux = '${user.username.substring(0,5)}...'
+      setUsername(aux);
     }
   }, []); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
   
