@@ -4,15 +4,10 @@ interface ILetter{
 }
 
 export class Letter {
-    private _value: String;
-    private _color: String;
     constructor(
-        readonly value: String,
-        readonly color: String
-    ){
-        this._value = value
-        this._color = color
-    }
+        private value: String,
+        private color: String
+    ){}
 
     static jsonConstructor(
         letter: ILetter
@@ -21,7 +16,7 @@ export class Letter {
     }
 
     static create(value: String, color: String): Letter | null{
-        if(value.length == 1 &&
+        if(value.length == 1 && value.toLowerCase().match(/[a-z]/i) &&
             (
                 color.toLowerCase() === 'red' ||
                 color.toLowerCase() === 'yellow' ||
@@ -35,7 +30,7 @@ export class Letter {
     }
     
     static jsonCreate(letter: ILetter): Letter | null{
-        if(letter.value.length == 1 &&
+        if(letter.value.length == 1 && letter.value.toLowerCase().match(/[a-z]/i) &&
             (
                 letter.color.toLowerCase() === 'red' ||
                 letter.color.toLowerCase() === 'yellow' ||
@@ -48,14 +43,14 @@ export class Letter {
         }
     }
     getValue(): String{
-        return this._value
+        return this.value
     }
     getColor(): String{
-        return this._color
+        return this.color
     }
     setValue(value: String): Boolean{
-        if(value.length == 1){
-            this._value = value
+        if(value.length == 1 && value.toLowerCase().match(/[a-z]/i)){
+            this.value = value
             return true
         }
         return false
@@ -66,7 +61,7 @@ export class Letter {
             color.toLowerCase() === 'yellow' ||
             color.toLowerCase() === 'green'
         ){
-            this._color = color
+            this.color = color
             return true
         }
         else{
@@ -74,6 +69,6 @@ export class Letter {
         }
     }
     toJson(): ILetter{
-        return JSON.parse(`{value: ${this._value}, color: ${this._color}}`)
+        return JSON.parse(`{value: ${this.value}, color: ${this.color}}`)
     }
 }

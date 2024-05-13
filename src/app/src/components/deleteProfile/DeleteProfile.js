@@ -1,7 +1,7 @@
 import React from 'react';
 import "./DeleteProfile.css";
 import Button from '../button/Button';
-import Button from '../message/Message';
+import Message from '../message/Message';
 //CREATE POP UP WINDOW
 import Modal from 'react-modal';
 //PROFILE API??
