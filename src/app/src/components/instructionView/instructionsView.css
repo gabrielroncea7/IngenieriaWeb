@@ -1,0 +1,33 @@
+/*CSS file for Button component*/
+/*Button with white text and green background, text aligned
+at center and 20px font
+When hovered over -> turns darker after 0.5 seconds
+When clicked -> turns lighter*/
+
+.button {
+    display:flex;
+    padding:0.35em 1.2em;
+    color: white;
+    background-color: #33b137;
+    font-size: 150%;
+    border:0.1em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-weight:300;
+    text-align:center;
+    transition: all 0.2s;
+}
+
+.button:hover {
+    background-color: #4dd352;
+    transition: 0.5 s;
+}
+
+@media all and (max-width:30em){
+    .button{
+        display:block;
+        margin:0.4em auto;
+    }
+}
