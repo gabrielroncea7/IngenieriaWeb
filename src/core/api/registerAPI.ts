@@ -1,29 +1,49 @@
 import express, { Request, Response } from 'express';
+import UserDAO from '../model/userDAO/userDAO';
+
 
 const app = express();
 const PORT = 3000;
+
+
+const userdao = UserDAO.getInstance();
+
 
 // Middleware para analizar los cuerpos JSON de las solicitudes
 app.use(express.json());
 
 // Endpoint para manejar el registro de usuarios
 app.post('/api/signup', (req: Request, res: Response) => {
-    const user = req.body;
+    const { username, email, password } = req.body;
+    console.log(username)
 
-    // Aquí puedes agregar lógica para registrar al usuario
-    if (isValidUser(user)) {
-        res.status(200).json({ status: 'registered' });
-    } else {
-        res.status(400).json({ status: 'error' });
-    }
+    userdao.find(username).then((resultado)=> {
+        if (resultado != null) {
+            console.log(username)
+            return res.status(401).json({ message: 'The user already exists in the database.1' });
+        }
+        userdao.findByEmail(email).then((resultado)=>
+            {
+            if (resultado != null) {
+                return res.status(401).json({ message: 'The user already exists in the database.2' });
+            }
+            userdao.addUser(username, email, password, 0, 0, 0).then((resultado)=>{
+
+                if(resultado == true) {
+                 res.status(200).json({ message: 'The user has been registered succesfully.', user: { username } });
+                }
+                else {
+                 res.status(500).json({ message: 'Internal server error.' });
+
+                }
+            })
+
+            })
+    })
+    
+
 });
 
-// Función para verificar si el usuario es válido (ejemplo)
-function isValidUser(user: any): boolean {
-    // Esto es solo un ejemplo, puedes implementar tu propia lógica de validación
-    const { username, email, password } = user;
-    return username && email && password; // Verificar que los campos obligatorios estén presentes
-}
 
 // Iniciar el servidor
 app.listen(PORT, () => {

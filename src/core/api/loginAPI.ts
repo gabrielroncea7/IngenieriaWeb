@@ -11,9 +11,9 @@ const PORT = 3000;
 app.use(bodyParser.json());
 
 // Endpoint to handle user login
-app.post('/login', (req: Request, res: Response) => {
+app.post('/api/login', (req: Request, res: Response) => {
     const { username, password } = req.body;
-
+    console.log(req.body)
     // Simple validation
     if (!username || !password) {
         return res.status(400).json({ message: 'Please provide username and password.' });
