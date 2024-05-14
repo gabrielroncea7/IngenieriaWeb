@@ -1,7 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-//FOR STORING USERNAME, FOR PROFILE
-import Cookies from 'js-cookie'; //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
 //FOR NAVIGATION
 import { useNavigate, Link } from 'react-router-dom';
 //FOR ENCRYPTION OF PASSWORD
@@ -34,9 +32,8 @@ const SignIn = () => {
       .then(response => {
         if (response.status == 200) {
 	  // get username from signin form
-	  const user = { username: username }; //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
-    	  // store username in cookies to use in profile
-    	  Cookies.set('user', user); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
+	  const user = { username: username };
+    	  //LLAMAR A LA API DE SESION
 	  // SUCCESS -> go to main page
           history.push('/App');
         } else {
