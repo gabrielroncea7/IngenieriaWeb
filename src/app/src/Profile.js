@@ -26,7 +26,12 @@ const Profile = () => {
     setIsOpenCha(false);
   };
 
-
+  const history = useNavigate();
+  
+  const handleLogOut = //LLAMAR A API LOGOUT PARA BORRAR LA SESION
+  {
+   history.push('/LogOut'); 
+  }
 
   // sets variable username to be used
   const [username, setUsername] = useState('');
@@ -42,9 +47,9 @@ const Profile = () => {
         </div>  
       	<div>
           <p><Link to="/game">Play Game</Link></p>
-          <p><Link to="/logout">Log out</Link></p>
         </div>
         <div>
+          <Button text="Log Out" onClick={handleLogOut} />
           <Button text="Delete Profile" onClick={openDel} />
           <DeleteProfile isOpen={isOpenDel} onClose={closeDel} />
         </div>
