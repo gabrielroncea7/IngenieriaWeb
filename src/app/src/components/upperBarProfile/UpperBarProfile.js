@@ -1,21 +1,17 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Cookies from 'js-cookie'; //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
 //imported user icon
 import { FaUser } from "react-icons/fa";
 
 const UpperBarProfile = () => {
 
+//LLAMAR A LA API DE SESION Y SACAR EL USERNAME
+  
   // sets variable username to be used as the found name in the cookie
-  const [username, setUsername] = useState(''); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
-
-  useEffect(() => { //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
-    // gets user from the global cookie to access the saved username
-    const user = Cookies.getJSON('user'); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
-    if (user && user.username) { //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
-      setUsername(user.username); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
-    } //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
+  const [username, setUsername] = useState('');
+  //take username and check if longer than 6 chars
+    setUsername(user.username);
     const str = {username}
     const len = str.length;
     if (len > 6) {
@@ -23,7 +19,6 @@ const UpperBarProfile = () => {
       const aux = '${user.username.substring(0,5)}...'
       setUsername(aux);
     }
-  }, []); //BORRAR CUANDO ESTÉ USABLE LA PROFILE API
   
   return{
     <div>
