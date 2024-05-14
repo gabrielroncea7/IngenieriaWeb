@@ -1,13 +1,9 @@
 import express, { Request, Response } from 'express';
 import UserDAO from '../model/userDAO/userDAO';
 
-
 const app = express();
-const PORT = 3000;
-
 
 const userdao = UserDAO.getInstance();
-
 
 // Middleware para analizar los cuerpos JSON de las solicitudes
 app.use(express.json());
@@ -44,8 +40,4 @@ app.post('/api/signup', (req: Request, res: Response) => {
 
 });
 
-
-// Iniciar el servidor
-app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
+export default app

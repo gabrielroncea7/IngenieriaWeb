@@ -5,13 +5,12 @@ import UserDAO from '../model/userDAO/userDAO';
 const userdao = UserDAO.getInstance();
 
 const app = express();
-const PORT = 3000;
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
 // Endpoint to handle user login
-app.post('/api/login', (req: Request, res: Response) => {
+app.post('/', (req: Request, res: Response) => {
     const { username, password } = req.body;
     console.log(req.body)
     // Simple validation
@@ -41,7 +40,4 @@ app.post('/api/login', (req: Request, res: Response) => {
 
 });
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+export default app
