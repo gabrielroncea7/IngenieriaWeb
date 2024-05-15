@@ -9,7 +9,7 @@ const userdao = UserDAO.getInstance();
 app.use(express.json());
 
 // Endpoint para manejar el registro de usuarios
-app.post('/api/signup', (req: Request, res: Response) => {
+app.post('/', (req: Request, res: Response) => {
     const { username, email, password } = req.body;
     console.log(username)
 
