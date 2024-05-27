@@ -8,6 +8,8 @@ import ChangeUsername from './components/changeUsername/ChangeUsername';
 import sessionServices from './services/sessionServices';
 //suponiendo que la api para los porcentajes y puntos del usuario se llamará scoreServices
 import scoreServices from './services/scoreServices';
+//suponiendo que la api para el logout se llama logoutServices
+import logoutServices from './services/logoutServices';
 import './index.css'
 
 
@@ -30,11 +32,9 @@ const Profile = () => {
   };
 
   const history = useNavigate();
-  
-  const handleLogOut = //LLAMAR A API LOGOUT PARA BORRAR LA SESION
-  {
-   history.push('/LogOut'); 
-  }
+
+  // HANDLE LOG OUT
+  const handleLogOut = logoutServices.logout().then(history.push('/logout'))
 
   //GET/SET USERNAME
   const [username, setUsername] = useState('')
