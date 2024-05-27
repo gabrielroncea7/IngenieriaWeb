@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 //ENCRYPT PASSWORD FROM VIEW
 import { sha256 } from 'js-sha256';
 import Form from './components/form/Form';
@@ -12,6 +12,8 @@ function SignUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+//INITIALIZE USE HISTORY FOR NAVIGATION
+  const history = useNavigate();
 
 //update values
   const handleUsernameChange = (event) => setUsername(event.target.value);
@@ -27,6 +29,16 @@ function SignUp() {
 
   	const data = { username, email, password: hashedPassword };
 	  signUp(data)
+		.then(response => {
+		if (response.status == 200) {
+		  //get username from signup form
+		  const user = { username: username };
+	          history.push('/Game');
+	        } else {
+		  //ERROR IN SIGNUP
+	          history.push('/ErrorSignUp');
+	          }
+	        })
   };
 
 const elements = [
