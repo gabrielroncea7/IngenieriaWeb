@@ -36,7 +36,7 @@ const SignIn = () => {
           history.push('/App');
         } else {
 	  //ERROR IN SIGNIN
-          history.push('/ErrorSignIn');
+          history.push('/errorsignin');
         }
       })
   };
