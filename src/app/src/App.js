@@ -22,6 +22,7 @@ function App() {
           <Route exact path="/logout" element={<LogOut/>} />
           <Route exact path="/profile" element={<Profile/>} />
           <Route exact path="/errorsignin" element={<ErrorSignIn/>} />
+          <Route exact path="/errorsignup" element={<ErrorSignUp/>} />
         </Routes>
       </Router>
     </>
