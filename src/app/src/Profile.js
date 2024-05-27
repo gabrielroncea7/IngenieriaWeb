@@ -5,6 +5,7 @@ import Header from './components/header/Header';
 import Button from './components/button/Button';
 import DeleteProfile from './components/deleteProfile/DeleteProfile';
 import ChangeUsername from './components/changeUsername/ChangeUsername';
+import sessionServices from './services/sessionServices';
 import './index.css'
 
 
@@ -33,8 +34,9 @@ const Profile = () => {
    history.push('/LogOut'); 
   }
 
-  // sets variable username to be used
-  const [username, setUsername] = useState('');
+  //GET/SET USERNAME
+  const [username, setUsername] = useState('')
+  sessionServices.getUsername().then(name => setUsername(name))
 
   return (
       <div>
