@@ -33,10 +33,10 @@ function SignUp() {
 		if (response.status == 200) {
 		  //get username from signup form
 		  const user = { username: username };
-	          history.push('/Game');
+	          history.push('/game');
 	        } else {
 		  //ERROR IN SIGNUP
-	          history.push('/ErrorSignUp');
+	          history.push('/errorsignup');
 	          }
 	        })
   };
