@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import LogOut from './LogOut';
@@ -12,7 +12,7 @@ import sessionServices from './services/sessionServices';
 
 
 function App() {
-
+      const history = useNavigate();
   return (
     <>
       <Router>
