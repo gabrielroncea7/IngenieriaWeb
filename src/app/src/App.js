@@ -3,9 +3,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
-import LogOut from './LogOut'
+import LogOut from './LogOut';
 import Game from './Game';
-import Profile from './Profile'
+import Profile from './Profile';
 import ErrorSignIn from './ErrorSignIn';
 import ErrorSignUp from './ErrorSignUp';
 
