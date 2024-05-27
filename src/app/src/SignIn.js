@@ -33,11 +33,9 @@ const SignIn = () => {
         if (response.status == 200) {
 	  // get username from signin form
 	  const user = { username: username };
-    	  //LLAMAR A LA API DE SESION
-	  // SUCCESS -> go to main page
           history.push('/App');
         } else {
-          //ERROR MESSAGE
+	  //ERROR IN SIGNIN
           history.push('/ErrorSignIn');
         }
       })
