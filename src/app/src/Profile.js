@@ -6,6 +6,8 @@ import Button from './components/button/Button';
 import DeleteProfile from './components/deleteProfile/DeleteProfile';
 import ChangeUsername from './components/changeUsername/ChangeUsername';
 import sessionServices from './services/sessionServices';
+//suponiendo que la api para los porcentajes y puntos del usuario se llamará scoreServices
+import scoreServices from './services/scoreServices';
 import './index.css'
 
 
@@ -38,6 +40,19 @@ const Profile = () => {
   const [username, setUsername] = useState('')
   sessionServices.getUsername().then(name => setUsername(name))
 
+  //GET/SET WIN PERCENTAGE
+  const[percentage, setPerc] = useState('')
+  scoreServices.getPercentage().then(percentage => setPerc(percentage))
+
+  //GET/SET TOTAL SCORE
+  const[totalscore, setTotal] = useState('')
+  scoreServices.getTotal().then(totalscore => setTotal(totalscore))
+
+  //GET/SET SCORE FOR THIS WEEK
+  const[score, setScore] = useState('')
+  scoreServices.getWeek().then(score => setScore(score))
+
+
   return (
       <div>
       	<Header />
@@ -48,6 +63,9 @@ const Profile = () => {
           <ChangeUsername isOpen={isOpenCha} onClose={closeCha} />
         </div>  
       	<div>
+          <p>Your total win % is {percentage}%</p>
+          <p>Your total score is {totalscore}</p>
+          <p>Your score this week is {score}</p>
           <p><Link to="/game">Play Game</Link></p>
         </div>
         <div>
