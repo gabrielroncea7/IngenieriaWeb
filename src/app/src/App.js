@@ -7,6 +7,7 @@ import LogOut from './LogOut'
 import Game from './Game';
 import Profile from './Profile'
 import ErrorSignIn from './ErrorSignIn';
+import ErrorSignUp from './ErrorSignUp';
 
 
 function App() {
