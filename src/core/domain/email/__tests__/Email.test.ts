@@ -21,11 +21,11 @@ describe('Pruebas para la clase Email', () => {
         expect(email.get()).toBe('usuario2@usuario.es');
 
     });
-    test('Comprobar metodo maker', () => {
+    test('Comprobar metodo create', () => {
         const emailString1 = 'test@example.com';
         const emailString2 = 'usuario';
-        const emailInstance1 = Email.Maker(emailString1);
-        const emailInstance2 = Email.Maker(emailString2);
+        const emailInstance1 = Email.create(emailString1);
+        const emailInstance2 = Email.create(emailString2);
         expect(emailInstance1 instanceof Email).toBe(true);
         expect(emailInstance1.get()).toBe(emailString1);
         expect(emailInstance2 instanceof Email).toBe(false);
