@@ -1,6 +1,16 @@
 // Importar la clase Email
 import { Email } from '../email/Email';
 
+interface IUser{
+    id: string,
+    username: string,
+    email: string,
+    password: string
+    points: number
+    wins: number,
+    gamesPlayed: number
+}
+
 export class User {
     private _id: string;
     private _username: string;
@@ -27,7 +37,23 @@ export class User {
         this._wins = wins;
         this._gamesPlayed = gamesPlayed;
     }
-
+    static jsonConstructor(user: IUser): User | null{
+        const email = Email.create(user.email)
+        if(email === null){
+            return null
+        }
+        else{
+            return new User(
+                user.id,
+                user.username,
+                email,
+                user.password,
+                user.points,
+                user.wins,
+                user.gamesPlayed
+            )
+        }
+    }
     // Getters and setters
     getId(): string {
         return this._id;
@@ -45,12 +71,19 @@ export class User {
         this._username = username;
     }
 
-    getEmail(): Email {
-        return this._email;
+    getEmail(): string {
+        return this._email.get();
     }
 
-    setEmail(email: Email): void {
-        this._email = email;
+    setEmail(email: string): boolean{
+        const newEmail = Email.create(email);
+        if(newEmail === null){
+            return false
+        }
+        else{
+            this._email = newEmail
+            return true
+        }
     }
 
     getPassword(): string {
@@ -83,5 +116,9 @@ export class User {
 
     setGamesPlayed(gamesPlayed: number): void {
         this._gamesPlayed = gamesPlayed;
+    }
+
+    toJson(): IUser{
+        return JSON.parse(`{id: ${this._id}, username: ${this._username}, email: ${this._email.get()}, password: ${this._password}, points: ${this._points}, wins: ${this._wins}, gamesPlayed: ${this._gamesPlayed}}`)
     }
 }
