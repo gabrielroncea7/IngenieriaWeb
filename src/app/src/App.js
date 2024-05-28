@@ -21,11 +21,18 @@ function App() {
           <Route exact path="/signup" element={<SignUp/>} />
           <Route exact path="/signin" element={<SignIn/>} />
           <Route exact path="/forbidden" element={<Forbidden/>} />
-          {sessionServices.getUsername() ? <Route exact path="/game" element={<Game/>} /> : history.push(/forbidden) }
-          {sessionServices.getUsername() ? <Route exact path="/logout" element={<LogOut/>} /> : history.push(/forbidden) }
-          {sessionServices.getUsername() ? <Route exact path="/profile" element={<Profile/>} /> : history.push(/forbidden) }
-          {sessionServices.getUsername() ? <Route exact path="/errorsignin" element={<ErrorSignIn/>} /> : history.push(/forbidden) }
-          {sessionServices.getUsername() ? <Route exact path="/errorsignup" element={<ErrorSignUp/>} /> : history.push(/forbidden) }
+      // no login check
+            <Route exact path="/game" element={<Game/>} />
+            <Route exact path="/logout" element={<LogOut/>} />
+            <Route exact path="/profile" element={<Profile/>} />
+            <Route exact path="/errorsignin" element={<ErrorSignIn/>} />
+            <Route exact path="/errorsignup" element={<ErrorSignUp/>
+      // login check
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/game" element={<Game/>} /> : history.push(/forbidden) }
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/logout" element={<LogOut/>} /> : history.push(/forbidden) }
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/profile" element={<Profile/>} /> : history.push(/forbidden) }
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/errorsignin" element={<ErrorSignIn/>} /> : history.push(/forbidden) }
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/errorsignup" element={<ErrorSignUp/>} /> : history.push(/forbidden) }
         </Routes>
       </Router>
     </>
