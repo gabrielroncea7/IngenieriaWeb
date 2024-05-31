@@ -1,4 +1,4 @@
-interface ILetter{
+export interface ILetter{
     value: String
     color: String
 }
@@ -69,6 +69,9 @@ export class Letter {
         }
     }
     toJson(): ILetter{
-        return JSON.parse(`{value: ${this.value}, color: ${this.color}}`)
+        return {
+            value: this.value,
+            color: this.color
+        }; 
     }
 }
