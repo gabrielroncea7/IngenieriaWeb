@@ -1,6 +1,6 @@
 import { Attempt } from "../attempt/Attempt";
 
-interface IGame{
+export interface IGame{
     attempts: [
         {
             order: number,
