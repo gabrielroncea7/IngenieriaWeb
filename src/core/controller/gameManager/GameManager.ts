@@ -83,4 +83,5 @@ class GameManager {
     //Devuelve el tamaño de la palabra y todas las condiciones del checkword
     getLenghtWord() {
     }
-}   
+}  
+export default GameManager;
