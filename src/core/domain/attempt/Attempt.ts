@@ -1,7 +1,6 @@
 import { Letter } from "../letter/Letter";
 
 interface IAttempt{
-    order: number,
     word: [
         {
             value: String
@@ -22,7 +21,8 @@ export class Attempt{
         this._word = word
     }
     static jsonConstructor(
-        attempt: IAttempt): Attempt
+        attempt: IAttempt,
+        order: number): Attempt
     {
         let word:Array<Letter> = []
 
@@ -30,7 +30,7 @@ export class Attempt{
             word.push(Letter.jsonConstructor(element))  
         );
 
-        return new Attempt(attempt.order, word)
+        return new Attempt(order, word)
     }
     static create(
         order: number,
@@ -48,12 +48,13 @@ export class Attempt{
         }
     }
     static jsonCreate(
-        attempt: IAttempt): Attempt | null
+        attempt: IAttempt,
+        order: number): Attempt | null
     {
         if(
-            Number.isInteger(attempt.order) &&
-            attempt.order >= 1 &&
-            attempt.order <= 6)
+            Number.isInteger(order) &&
+            order >= 1 &&
+            order <= 6)
         {
             let word: Array<Letter> = []
 
@@ -71,7 +72,7 @@ export class Attempt{
                 }
             }
 
-            return succeed ? new Attempt(attempt.order, word) : null
+            return succeed ? new Attempt(order, word) : null
         }
         else{
             return null
@@ -101,8 +102,9 @@ export class Attempt{
     }
     toJson(): IAttempt{
         return JSON.parse(
-            `{order: ${this._order}, word:[${
+            `{"word":"[${
                 this._word.forEach(
-                    element => `${element.toJson()},`)}]}`)
+                    element => `${element.toJson()},`
+                )}]"}`)
     }
 }
