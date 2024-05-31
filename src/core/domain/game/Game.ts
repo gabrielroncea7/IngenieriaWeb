@@ -33,8 +33,8 @@ export class Game {
     static jsonConstructor(game: IGame): Game{
         let attemtps: Array<Attempt> = []
 
-        game.attempts.forEach(a => {
-            attemtps.push(Attempt.jsonConstructor(a))
+        game.attempts.forEach((a, i) => {
+            attemtps.push(Attempt.jsonConstructor(a, i))
         });
 
         return new Game(attemtps, game.date, game.points)
@@ -56,8 +56,8 @@ export class Game {
         if(Number.isInteger(game.points) && game.points >= -1){
             let attemtps: Array<Attempt> = []
 
-            game.attempts.forEach(a => {
-                const attempt = Attempt.jsonConstructor(a)
+            game.attempts.forEach((a, i) => {
+                const attempt = Attempt.jsonConstructor(a, i)
 
                 if(attempt === null){
                     return null
@@ -99,8 +99,8 @@ export class Game {
     }
     toJson(): IGame{
         return JSON.parse(
-            `{attempts: [${this._attempts.forEach(
+            `{"attempts": "[${this._attempts.forEach(
                 element => `${element.toJson()}, `
-            )}], date: ${this._date}, points: ${this._points}}`)
+            )}]", "date": "${this._date}", "points": "${this._points}"}`)
     }
 }
