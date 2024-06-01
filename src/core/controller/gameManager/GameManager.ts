@@ -1,6 +1,8 @@
 import { User } from '../../domain/user/User';
 import { Email } from '../../domain/email/Email';
 import { Word } from '../../domain/word/Word';
+import { Game } from '../../domain/game/Game';
+import { Attempt } from '../../domain/attempt/Attempt';
 import WordDAO from '../../model/wordDAO/wordDAO'
 import UserDAO from '../../model/userDAO/userDAO'
 import GameDAO from '../../model/gameDAO/gameDAO'
@@ -32,41 +34,45 @@ export class GameManager {
         }
     }
 
-    //FUNCION ANTIGUA COMENTADA DE generateWord
-            /*
-        const wordDAO = WordDAO.getInstance();
-        try {
-            const word = await wordDAO.find();
-            return word;
-        } catch (error) {
-            console.error('Error finding word:', error);
-            return null;
-        }
-        */
-
     //recibir como parametro el usuario, y que desde la bdd saquemos los intentos
     //Comprueba la fecha de la palabra. Si es de hoy perfecto, seguimos. Sino se llama a generateWord para conseguir una nueva.
-    async checkWord(palabra: string): Promise<boolean> 
-     {
-
-        //LOGICA DE COMPROBACIÓN DE FECHA
-        //Si la palabra es de hoy, seguimos
-        
-        //Si la palabra no es de hoy, se llama a generateWord
-
-        const wordDAO = WordDAO.getInstance();
-        try {
-            const word = await wordDAO.find();
-            if (word != null && word.get() === palabra) {
-                return true;
+    async checkWord(palabra: string, usuario: string) {
+        // LOGICA PARA COMPROBAR LA FECHA DE LA PALABRA
+    
+        // Instanciamos worddao
+        const worddao = WordDAO.getInstance();
+        const ultimapalabra = await worddao.find();
+        // Instanciamos gamedao
+        const gamedao = GameDAO.getInstance();
+    
+        if (ultimapalabra != null && ultimapalabra.get() === palabra) {
+            let now = new Date();
+            let year = now.getFullYear();
+            let month = (now.getMonth() + 1).toString().padStart(2, '0'); // Los meses son 0-indexados, por eso se suma 1
+            let day = now.getDate().toString().padStart(2, '0');
+            let newformattedDate = `${year}-${month}-${day}`;
+    
+            if (ultimapalabra.getFormattedDate() == newformattedDate) {
+                // LOGICA PARA COMPROBAR LOS INTENTOS A PARTIR DE UN USUARIO DE LA BDD
+                gamedao.getLastGame(usuario).then((game) => {
+                    if (game != false) {
+                        const vector: Attempt[] = game.getAttempts();
+                        const numIntentos: number = vector.length;
+                        if (numIntentos >= 6) {
+                            return false; // Si ya ha habido 6 intentos, no se puede jugar
+                        } else {
+                            return true; // Si no ha habido 6 intentos, se puede jugar
+                        }
+                    }
+                });
+                //
             } else {
+                this.generateWord();
                 return false;
             }
-        } catch (error) {
-            console.error('Error checking word:', error);
-            return false;
         }
     }
+    
 
     //addpoints
     async addPoints(username: string, points: number)   {
@@ -101,17 +107,24 @@ export class GameManager {
     }
     
 
-    //Me espero a que miguel arregle el dao
-    //Recibo un json y llamo al metodo jsonConstructor de game y devuelvo el objeto Game
     getLastGame(usuario: string) {
-        //
-        var gameDAO = GameDAO.getInstance();
-        //tenemos un problema, el gamme es un string y lo necesitamos en Object
-        var game = gameDAO.getLastGame(usuario);
+        const gamedao = GameDAO.getInstance();
+        gamedao.getLastGame(usuario).then((game)=>{
+
+            if(game != false){
+                return game
+            }
+        })
     }
 
     //Devuelve el tamaño de la palabra y todas las condiciones del checkword
     getLenghtWord() {
+        const worddao = WordDAO.getInstance();
+        worddao.find().then((word) => {
+            if (word != null) {
+                return word.get().length;
+            }
+        })
     }
 }  
 export default GameManager;

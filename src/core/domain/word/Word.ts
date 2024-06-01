@@ -1,3 +1,5 @@
+import { get } from "mongoose";
+
 export class Word {
     private _word: string;
     private _fecha: Date;
@@ -47,5 +49,12 @@ export class Word {
     // Method to get the date
     getDate(): Date {
         return this._fecha;
+    }
+
+    getFormattedDate(): string {
+        let year = this._fecha.getFullYear();
+        let month = (this._fecha.getMonth() + 1).toString().padStart(2, '0');
+        let day = this._fecha.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
     }
 }
