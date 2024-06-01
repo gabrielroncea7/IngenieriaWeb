@@ -70,3 +70,4 @@ class AccountManager {
         console.log('Nombre de usuario o contraseña incorrectos. No se puede eliminar la cuenta.');
     }
 }
+export default AccountManager;
