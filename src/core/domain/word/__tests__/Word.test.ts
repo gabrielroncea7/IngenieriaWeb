@@ -17,14 +17,20 @@ describe('Word class', () => {
 
     it('No debería crear una instancia de Word válida', () => {
         const result = word.create(invalidWordShort, new Date());
-        expect(result).toBe(false);
+        expect(result).toBe(null);
         expect(word.get()).toBe(validWord); // La palabra original no debería cambiar
     });
 
     it('No debería crear una instancia de Word válida con una palabra larga', () => {
         const result = word.create(invalidWordLong, new Date());
-        expect(result).toBe(false);
+        expect(result).toBe(null);
         expect(word.get()).toBe(validWord); // La palabra original no debería cambiar
+    });
+
+    it('Debería crear una instancia de Word válida', () => {
+        const newWordInstance = new Word(validWord, new Date());
+        const result = word.create(validWord, new Date()); // Usar el método estático para crear una nueva instancia
+        expect(result).toEqual(newWordInstance);
     });
 
     it('Debería establecer una palabra usando el método setByWordObj', () => {
