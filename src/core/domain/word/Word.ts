@@ -13,13 +13,11 @@ export class Word {
     }
 
     // Method to create a word
-    create(word: string, fecha: Date): boolean {
+    create(word: string, fecha: Date): Word|null {
         if (typeof word === 'string' && word.length >= 5 && word.length <= 10) {
-            this._word = word;
-            this._fecha = fecha;
-            return true;
+            return new Word(word,fecha);
         } else {
-            return false;
+            return null;
         }
     }
 
