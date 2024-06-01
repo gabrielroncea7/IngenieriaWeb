@@ -1,12 +1,7 @@
 import { Letter } from "../letter/Letter";
 
 interface IAttempt{
-    word: [
-        {
-            value: String
-            color: String
-        }
-    ]
+    word: Array<{ value: String; color: String }>
 }
 
 export class Attempt{
@@ -101,10 +96,8 @@ export class Attempt{
         this._word = word
     }
     toJson(): IAttempt{
-        return JSON.parse(
-            `{"word":"[${
-                this._word.forEach(
-                    element => `${element.toJson()},`
-                )}]"}`)
+        return {
+            word: this._word.map(letter => letter.toJson())
+          };
     }
 }
