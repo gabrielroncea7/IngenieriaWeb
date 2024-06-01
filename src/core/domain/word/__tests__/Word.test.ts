@@ -16,20 +16,20 @@ describe('Word class', () => {
     });
 
     it('No debería crear una instancia de Word válida', () => {
-        const result = word.create(invalidWordShort, new Date());
+        const result = Word.create(invalidWordShort, new Date());
         expect(result).toBe(null);
         expect(word.get()).toBe(validWord); // La palabra original no debería cambiar
     });
 
     it('No debería crear una instancia de Word válida con una palabra larga', () => {
-        const result = word.create(invalidWordLong, new Date());
+        const result = Word.create(invalidWordLong, new Date());
         expect(result).toBe(null);
         expect(word.get()).toBe(validWord); // La palabra original no debería cambiar
     });
 
     it('Debería crear una instancia de Word válida', () => {
         const newWordInstance = new Word(validWord, new Date());
-        const result = word.create(validWord, new Date()); // Usar el método estático para crear una nueva instancia
+        const result = Word.create(validWord, new Date()); // Usar el método estático para crear una nueva instancia
         expect(result).toEqual(newWordInstance);
     });
 
@@ -45,11 +45,13 @@ describe('Word class', () => {
         expect(result).toBe(false);
         expect(word.get()).toBe(validWord);
     });
-    it('No debería establecer una palabra usando el método setByWordObj con  una palabra larga', () => {
+
+    it('No debería establecer una palabra usando el método setByWordObj con una palabra larga', () => {
         const result = word.setByWordObj(invalidWordLong);
         expect(result).toBe(false);
         expect(word.get()).toBe(validWord);
     });
+
     it('Debería establecer una palabra usando el método set con otro objeto de Word', () => {
         const newWord = 'newWord';
         const newWordObj = new Word(newWord, new Date());
@@ -57,6 +59,7 @@ describe('Word class', () => {
         expect(word.get()).toBe(newWord);
         expect(word.getDate()).toBe(newWordObj.getDate());
     });
+
     it('Debería crear una instancia de Word válida usando el método Maker', () => {
         const wordObj = Word.Maker(validWord);
         expect(wordObj.get()).toBe(validWord);
