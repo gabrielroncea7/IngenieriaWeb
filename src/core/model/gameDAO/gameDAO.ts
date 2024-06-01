@@ -1,7 +1,8 @@
 import GameSchema from '../Schema/GameSchema'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import { convertToObject } from 'typescript';
+import { Attempt } from '../../domain/attempt/Attempt'
+import { Game } from '../../domain/game/Game';
 
 dotenv.config(); //PARA LA CONEXION CON LA BD
 
@@ -30,7 +31,7 @@ class GameDAO{ //utilizaremos el patron singleton
     }
 
 
-    public async getLastGame(username: String){ //OK DEVUELVE EL LASTGAME EN FORMATO STRING PORQUE EN JSON NO PERMITE VER EL VALOR DE LOS ARRAYS ANIDADOS
+    public async getLastGame(username: String){ //Devuelve el ultimo Game del usuario indicado (Promise < False || Game >)
 
         const foundgame = await GameSchema.findOne({_username: username}).sort({createdAt: -1})
 
@@ -43,15 +44,15 @@ class GameDAO{ //utilizaremos el patron singleton
         }
         else{
 
-            const gameString = JSON.stringify(foundgame, null, 2); //ESTO PERMITE PODER VISUALIZAR EL CONTENIDO DE LOS ARRAYS ANIDADOS
+            const latestGame = new Game(foundgame._attempts, foundgame.createdAt, foundgame._points || 0);
 
-            return gameString;
+            return latestGame;
 
         }
 
     }
 
-    public async addGame(username: string, attempt: string){ //OK --> el formato del string tiene que ser JSON
+    public async addGame(username: string, intento: Attempt){ //DONE
 
         //crear esquema con los datos obtenidos
 
@@ -61,9 +62,9 @@ class GameDAO{ //utilizaremos el patron singleton
 
         gameSchema._points = 0;
 
-        const attemptsArray = JSON.parse(attempt); //convierte el string en un array
+        const attempts_array =[intento.getWord()] 
 
-        gameSchema._attempts = attemptsArray; //copiamos el array al esquema
+        gameSchema._attempts = attempts_array;
 
         //introducir esquema en la BD
 
@@ -83,7 +84,7 @@ class GameDAO{ //utilizaremos el patron singleton
 
     }
 
-    public async addAttempt(username: String, attempt: string){
+    public async addAttempt(username: String, intento: Attempt){ //DONE
 
         //recuperar lastGame
 
@@ -102,11 +103,7 @@ class GameDAO{ //utilizaremos el patron singleton
 
             const attemptsArray = foundgame._attempts; //vector con los intentos
 
-            const nuevointento:{value: string, color: string}[] = JSON.parse(attempt);
-
-            console.log(nuevointento);
-
-            attemptsArray.push(nuevointento);
+            attemptsArray.push(intento.getWord()); //realizamos push del nuevo vector letter en el vector de intentos
 
             //crear nueva entrada de la BD
 
