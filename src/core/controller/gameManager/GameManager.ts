@@ -4,14 +4,36 @@ import { Word } from '../../domain/word/Word';
 import WordDAO from '../../model/wordDAO/wordDAO'
 import UserDAO from '../../model/userDAO/userDAO'
 import GameDAO from '../../model/gameDAO/gameDAO'
+import axios from 'axios';
 
 
+export class GameManager {
 
-class GameManager {
-
-
+    
     //Accede a APIDiccionario, comprueba que sea un objeto WORD y lo devuelve.
     async generateWord(): Promise<Word | null> {
+
+        try {
+            //Llamada a la API
+            const response = await axios.get('https://clientes.api.greenborn.com.ar/public-random-word');
+            //Extraemos la palabra del repsone
+            const palabra = response.data;
+            //Comprobamos que sea un objeto WORD
+
+            const isCreated = Word.create(palabra, new Date());
+            if (isCreated != null) {
+                return isCreated;
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Error generating word:', error);
+            return null;
+        }
+    }
+
+    //FUNCION ANTIGUA COMENTADA DE generateWord
+            /*
         const wordDAO = WordDAO.getInstance();
         try {
             const word = await wordDAO.find();
@@ -20,11 +42,18 @@ class GameManager {
             console.error('Error finding word:', error);
             return null;
         }
-    }
+        */
+
     //recibir como parametro el usuario, y que desde la bdd saquemos los intentos
     //Comprueba la fecha de la palabra. Si es de hoy perfecto, seguimos. Sino se llama a generateWord para conseguir una nueva.
     async checkWord(palabra: string): Promise<boolean> 
      {
+
+        //LOGICA DE COMPROBACIÓN DE FECHA
+        //Si la palabra es de hoy, seguimos
+        
+        //Si la palabra no es de hoy, se llama a generateWord
+
         const wordDAO = WordDAO.getInstance();
         try {
             const word = await wordDAO.find();
@@ -72,7 +101,8 @@ class GameManager {
     }
     
 
-    
+    //Me espero a que miguel arregle el dao
+    //Recibo un json y llamo al metodo jsonConstructor de game y devuelvo el objeto Game
     getLastGame(usuario: string) {
         //
         var gameDAO = GameDAO.getInstance();
