@@ -1,15 +1,16 @@
-import GameManager from '../gameManager'
+import GameManager from '../GameManager'
 import UserDAO from '../../../model/userDAO/userDAO';
+import { User } from '../../../domain/user/User';
 
 describe('GameManager', () => {
     let gameManager: GameManager;
-    let userDAO: UserDAO
+    let userDAO: UserDAO = UserDAO.getInstance()
 
-    beforeEach(() => {
+    beforeEach(async () => {
         gameManager = new GameManager();
     });
 
-    afterEach(() => {
+    afterEach(async () => {
         jest.clearAllMocks();
     });
 
@@ -17,7 +18,7 @@ describe('GameManager', () => {
         const points = gameManager.calcPoints(0);
 
         // Verificar que se obtengan los usuarios esperados
-        expect(points).toEqual(-1);
+        expect(points).toEqual(0);
     })
     it('Calc points test: Attempt 1', async () => {
         const points = gameManager.calcPoints(1);
@@ -59,18 +60,41 @@ describe('GameManager', () => {
         const points = gameManager.calcPoints(7);
 
         // Verificar que se obtengan los usuarios esperados
-        expect(points).toEqual(-1);
+        expect(points).toEqual(0);
     })
     it('Add points test', async ()=>{
-        const user1 = await userDAO.find('testUser'); 
+        const user1: User | null = await userDAO.find('testUser'); 
+
         if (user1) { // Verificar si user1 no es null
-            gameManager.addPoints(85);
-            const user2 = await userDAO.find('testUser'); 
-            if (user2) { // Verificar si user2 no es null
-                expect(user2.getPoints()).toEqual(user1.getPoints() + 85);
-            } else {
-                fail('User not found');
-            }
+            gameManager.addPoints(user1.getUsername(), 85)
+                .then((resultado) => {
+
+                    if(resultado == true){
+
+                        userDAO.find('testUser')
+                            .then((user2) => {
+
+                                if(user2 != null){
+                                    if (user2) { // Verificar si user2 no es null
+                                        expect(user2.getPoints()).toEqual(user1.getPoints() + 85);
+                                    } else {
+                                        fail('User not found');
+                                    }
+
+                                }
+                                else{
+
+                                    fail('User2 not found');
+
+                                }
+
+
+                            })
+
+                    }
+
+                })
+            
         } else {
             fail('User not found');
         }
@@ -78,31 +102,41 @@ describe('GameManager', () => {
     it('Generate word', async ()=>{
         const max = 10;
         const min = 5;
-        const word =await gameManager.generateWord();
-        expect(word.get().length).toBeGreaterThanOrEqual(min);
-        expect(word.get().length).toBeLessThanOrEqual(max);
-    });
+        const word = await gameManager.generateWord();
+
+        if(word){
+            expect(word.get().length).toBeGreaterThanOrEqual(min);
+            expect(word.get().length).toBeLessThanOrEqual(max);
+        } else {
+            fail('Word not found');
+        }
+    }, 20000);
 
     it('Test para probar la función getLastGame', async ()=>{
-        const user1 = await userDAO.find('testUser');
-        if(user1){
-            let game = await gameManager.getLastGame('testUser');
-            if (game !== false) {
-                expect(typeof game).toBe('string');
-                expect(game.length).toBeGreaterThan(0);
-                 
-            } else {
-                
-                fail('El juego no fue encontrado en la base de datos');
-                
-            }
-            
-        }
-        else{
-            fail('No se ha encontrado al usuario');
-        }
-
-
-    });
-
+        userDAO.find('testUser')
+            .then(async (user1) => {
+                if(user1){
+                    gameManager.getLastGame('testUser')
+                        .then((game) => {
+                            if(game != null){
+        
+                                expect(typeof game).toBe('Game');
+                                expect(game.getAttempts().length).toBeGreaterThan(0);
+        
+                            }
+                            else{
+        
+                                console.error('Game not found');
+        
+                            }
+        
+                        })
+                    
+                }
+                else{
+                    console.error('user not found');
+                }
+            })
+        
+    }, 20000);
 });

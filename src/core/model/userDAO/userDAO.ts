@@ -42,7 +42,6 @@ class UserDAO { //PATRON SINGLETON PARA EVITAR PROBLEMAS DE CONEXION
 
         }
         else{
-
              //transformamos el userfound en un objeto de la clase User
 
             const email = new Email(userfound._email || "");
@@ -127,11 +126,11 @@ class UserDAO { //PATRON SINGLETON PARA EVITAR PROBLEMAS DE CONEXION
 
         //hacemos delete del usuario
 
-        this.delete(updatedUser.getUsername()); //aqui podemos utilizar el string id del usuario recibido
+        await this.delete(updatedUser.getUsername()); //aqui podemos utilizar el string id del usuario recibido
         
         //introducimos el usuario con los datos nuevos
 
-        const result = this.addUser(updatedUser.getUsername(), updatedUser.getEmail(), updatedUser.getPassword(), updatedUser.getPoints(), updatedUser.getWins(), updatedUser.getGamesPlayed());
+        const result = await this.addUser(updatedUser.getUsername(), updatedUser.getEmail(), updatedUser.getPassword(), updatedUser.getPoints(), updatedUser.getWins(), updatedUser.getGamesPlayed());
 
         return result;
 
@@ -146,7 +145,6 @@ class UserDAO { //PATRON SINGLETON PARA EVITAR PROBLEMAS DE CONEXION
             //no se ha encontrado ningun usuario que utilice ese mail
 
             return null;
-
         }
         else{
 
