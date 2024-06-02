@@ -14,11 +14,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@types/nodemon": "^1.19.6",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "js-sha256": "^0.11.0",
     "mongoose": "^8.3.2",
     "ts-node": "^10.9.2"
   },
