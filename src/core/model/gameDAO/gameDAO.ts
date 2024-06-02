@@ -84,6 +84,35 @@ class GameDAO{ //utilizaremos el patron singleton
 
     }
 
+    public async addPoints(username: string, points: number): Promise<Boolean>{ //ARREGLAR
+
+        const foundgame = await this.getLastGame(username)
+
+        if(foundgame){
+
+            const gameSchema = new GameSchema;
+
+            gameSchema._attempts = foundgame.getAttempts();
+
+            gameSchema._points = points
+
+            gameSchema._username = username;
+
+            await GameSchema.findByIdAndDelete(); //se borra la antigua partida sin puntos
+
+            await gameSchema.save();
+
+            return true;
+
+        }
+        else{
+
+            return false;
+
+        }
+
+    } 
+
     public async addAttempt(username: String, intento: Attempt){ //DONE
 
         //recuperar lastGame
