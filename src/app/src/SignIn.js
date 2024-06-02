@@ -26,7 +26,7 @@ const SignIn = () => {
     //ENCRYPT PASSWORD
     const hashedPassword = sha256(password);
 
-    const data = { username, password: hashedPassword };
+    const data = { username: username, password: hashedPassword };
 
     signIn(data)
       .then(response => {
