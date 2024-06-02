@@ -70,7 +70,7 @@ export class GameManager {
 
         const lastGame: Game | null = await gamedao.getLastGame(usuario)
         
-        if(lastGame !== null && this.formatDAte(lastGame.getDate()) === newformattedDate && lastGame.getAttempts().length >= 6){
+        if(lastGame !== null && this.formatDAte(lastGame.getDate()) === newformattedDate && (lastGame.getAttempts().length >= 6 || lastGame.getPoints() !== 0)){
             return null
         }
 
@@ -124,7 +124,7 @@ export class GameManager {
                 points = this.calcPoints(lastGame.getAttempts().length + 1)
             }
 
-            this.addPoints(usuario, points)
+            await this.addPoints(usuario, points)
             
             const respuesta: ResponesGameAPI = {
                 wordChecked: wordChecked,
@@ -227,7 +227,9 @@ export class GameManager {
     //addpoints
     async addPoints(username: string, points: number): Promise<boolean> {
         var userDAO = UserDAO.getInstance();
-        userDAO.find(username).then(async (user) => {  
+        const gameDao = GameDAO.getInstance()
+        await gameDao.addPoints(username, points)
+        return userDAO.find(username).then(async (user) => {  
             if (user != null){
                 user.setPoints(user.getPoints() + points);
                 await userDAO.updateUser(user);
@@ -240,7 +242,6 @@ export class GameManager {
 
             }
         });
-        return false
 }
     
     //calcpoints
