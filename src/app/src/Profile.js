@@ -35,9 +35,9 @@ const Profile = () => {
   const history = useNavigate();
 
   const [email, setEmail] = useState('')
-  const [games, setgames] = useState('')
+  const [games, setGames] = useState('')
   const [wins, setWins] = useState('')
-  const [points, setpoints] = useState('')
+  const [points, setPoints] = useState('')
 
   useEffect(async () => {
     const response = await profileServices.getUserData()
@@ -51,7 +51,7 @@ const Profile = () => {
   }, [])
 
   // HANDLE LOG OUT
-  //const handleLogOut = logoutServices.logout().then(history.push('/logout'))
+  //const handleLogOut = logoutServices.logout().then(history('/logout'))
 
   //GET/SET USERNAME
   const [username, setUsername] = useState('')

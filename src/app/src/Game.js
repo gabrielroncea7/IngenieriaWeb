@@ -20,19 +20,17 @@ const generateEmptyWord = (size) => {
   return word
 }
 
-const Game = () => {
+const Game = async () => {
   //controls INSTRUCTIONS pop up window
   const [username, setUsername] = useState('')
 
   sessionServices.getUsername().then(name => setUsername(name))
 
-  const [wordSize, hasPlayed, game] = GameService
-    .getSize(username)
-    .then(res => {return res.size, res.hasPlayedToday, res.game})
+  const res = await GameService.getSize(username)
 
-  const emptyWord = generateEmptyWord(wordSize)
+  const emptyWord = generateEmptyWord(res.data.length)
 
-  const [attempts, setAttemps] = useState((hasPlayed) ? game.push(...emptyWord) : [[...emptyWord]])
+  const [attempts, setAttemps] = useState([[...emptyWord]])
   const [currentWord, setCurrentWord] = useState([...emptyWord])
   const [message, setMessage] = useState({message: '', color: ''})
 

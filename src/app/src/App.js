@@ -17,11 +17,11 @@ function App() {
 		};
      
       {/* login check
-          //{sessionServices.getUsername().length > 0 ? <Route exact path="/game" element={<Game/>} /> : history.push(/forbidden) }
-          //{sessionServices.getUsername().length > 0 ? <Route exact path="/logout" element={<LogOut/>} /> : history.push(/forbidden) }
-          //{sessionServices.getUsername().length > 0 ? <Route exact path="/profile" element={<Profile/>} /> : history.push(/forbidden) }
-          //{sessionServices.getUsername().length > 0 ? <Route exact path="/errorsignin" element={<ErrorSignIn/>} /> : history.push(/forbidden) }
-          //{sessionServices.getUsername().length > 0 ? <Route exact path="/errorsignup" element={<ErrorSignUp/>} /> : history.push(/forbidden) }*/}
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/game" element={<Game/>} /> : history(/forbidden) }
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/logout" element={<LogOut/>} /> : history(/forbidden) }
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/profile" element={<Profile/>} /> : history(/forbidden) }
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/errorsignin" element={<ErrorSignIn/>} /> : history(/forbidden) }
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/errorsignup" element={<ErrorSignUp/>} /> : history(/forbidden) }*/}
           
           
   return (

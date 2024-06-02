@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 //FOR ENCRYPTION OF PASSWORD
 import { sha256 } from 'js-sha256';
 import Form from './components/form/Form';
-import signIn from './services/accountServices'
+import accountServices from './services/accountServices'
 import Header from './components/header/Header';
 
 const SignIn = () => {
@@ -28,15 +28,15 @@ const SignIn = () => {
 
     const data = { username: username, password: hashedPassword };
 
-    signIn(data)
+    accountServices.signIn(data)
       .then(response => {
         if (response.status == 200) {
 	  // get username from signin form
-	  const user = { username: username };
-          history.push('/App');
+	        const user = { username: username };
+          history('/game');
         } else {
 	  //ERROR IN SIGNIN
-          history.push('/errorsignin');
+          history('/errorsignin');
         }
       })
   };

@@ -27,16 +27,16 @@ function SignUp() {
 	//ENCRYPT PASSWORD
 	const hashedPassword = sha256(password);
 
-  	const data = { username, email, password: hashedPassword };
+  	const data = { username, email, password: password };
 	  signUp(data)
 		.then(response => {
 		if (response.status == 200) {
 		  //get username from signup form
 		  const user = { username: username };
-	          history.push('/game');
+	          history('/game');
 	        } else {
 		  //ERROR IN SIGNUP
-	          history.push('/errorsignup');
+	          history('/errorsignup');
 	          }
 	        })
   };
