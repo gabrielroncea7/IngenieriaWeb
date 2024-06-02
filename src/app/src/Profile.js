@@ -11,6 +11,7 @@ import sessionServices from './services/sessionServices';
 //suponiendo que la api para el logout se llama logoutServices
 //import logoutServices from './services/logoutServices';
 import './index.css'
+import profileServices from './services/profileServices';
 
 
 const Profile = () => {
@@ -32,6 +33,22 @@ const Profile = () => {
   };
 
   const history = useNavigate();
+
+  const [email, setEmail] = useState('')
+  const [games, setgames] = useState('')
+  const [wins, setWins] = useState('')
+  const [points, setpoints] = useState('')
+
+  useEffect(async () => {
+    const response = await profileServices.getUserData()
+
+    if(response.status == 200){
+      setEmail(response.data.email)
+      setGames(response.data.gamesPlayed)
+      setWins(response.data.wins)
+      setPoints(response.data.points)
+    }
+  }, [])
 
   // HANDLE LOG OUT
   //const handleLogOut = logoutServices.logout().then(history.push('/logout'))
@@ -58,15 +75,16 @@ const Profile = () => {
       	<Header />
       	<h2>My Profile</h2>
         <div>
-          <p>Your username is {username}</p>
-          <Button text="Change Username" onClick={openCha} />
-          <ChangeUsername isOpen={isOpenCha} onClose={closeCha} />
+          <p>Username: {username}</p>
+          <p>Email: {email}</p>
+          {/*<Button text="Change Username" onClick={openCha} />
+          <ChangeUsername isOpen={isOpenCha} onClose={closeCha} />*/}
         </div>  
       	<div>
-          {/*<p>Your total win % is {percentage}%</p>*/}
-          {/*<p>Your total score is {totalscore}</p>*/}
-          {/*<p>Your score this week is {score}</p>*/}
-          {/*<p><Link to="/game">Play Game</Link></p>*/}
+          {<p>Total games played: {games}</p>}
+          {<p>Total wins: {wins}</p>}
+          {<p>Points: {points}</p>}
+          {<p><Link to="/game">Play Game</Link></p>}
         </div>
         <div>
           {/*<Button text="Log Out" onClick={handleLogOut} />*/}

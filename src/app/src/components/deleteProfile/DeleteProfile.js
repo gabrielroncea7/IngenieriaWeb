@@ -7,30 +7,27 @@ import Modal from 'react-modal';
 //PROFILE API??
 //import delete from '../services/profileServices';
 import sessionServices from '../../services/sessionServices';
+import profileServices from '../../services/profileServices';
 
 const DeleteProfile = ({ isOpen, onClose }) => {
 
 //sends signal to delete profile
-  const handleSubmit = async (event) => {
-    	//const data = {username};
-    //supongo que la API se llamara profileServices, tipo accountServices y gameServices
-      //const response = profileServices
-      //HE PUESTO USERNAME PORQUE POR AHORA NO PUEDO SACAR ID
-      //.delete(username)
-      //.then(res => res)
-      //if(res.true){  
-        //setMessage({
-          //message: `The account has been deleted`,
-          //color: 'green'
-        //})
-      //}
-    };
+  
 
 
   //GET/SET USERNAME
   const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   sessionServices.getUsername().then(name => setUsername(name))
   
+  const handleSubmit = async (event) => {
+    const response = await profileServices.deleteAccount(username, password)
+
+    if(response.status == 200){
+      //redireccionar a signup
+    }
+  };
+
   //returns text with warning about account deletion
   return (
     <>
@@ -48,8 +45,10 @@ const DeleteProfile = ({ isOpen, onClose }) => {
           <p>If you delete your profile, you won't be able to login using your credentials again, and all your data will be lost.</p>
         </div>
         <div>
-          <p>Click on the 'Delete Profile' button to delete your account forever.</p>
+          <p>Insert your password and click on the 'Delete Profile' button to delete your account forever.</p>
         </div>
+        <label>Password</label>
+        <input id='password-delete-input' onChange={(event) => setPassword(event.target.value)}/>
         <Button text="Delete Profile" onClick={handleSubmit} />
         <div>
           <p>If you don't want to delete your account, click on the 'Close Warning Window' button.</p>
