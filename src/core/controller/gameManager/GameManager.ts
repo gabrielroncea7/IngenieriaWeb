@@ -42,7 +42,6 @@ export class GameManager {
             return null;
         }
     }
-
     //
 
     //recibir como parametro el usuario, y que desde la bdd saquemos los intentos
@@ -62,13 +61,11 @@ export class GameManager {
         let newformattedDate = `${year}-${month}-${day}`;
 
         if (!ultimapalabra || (ultimapalabra !== null && ultimapalabra.getFormattedDate() != newformattedDate)) {
-            const newWord = await this.generateWord()
-
-            if(newWord !== null){
-                await worddao.addWord(newWord.get())
+            const wordCreated = await this.generateWord()
+            if(wordCreated !== null){
+                await worddao.addWord(wordCreated.get())
             }
-
-            ultimapalabra = newWord
+            ultimapalabra = wordCreated
         }
 
         const lastGame: Game | null = await gamedao.getLastGame(usuario)
@@ -285,13 +282,32 @@ export class GameManager {
     }
 
     //Devuelve el tamaño de la palabra y todas las condiciones del checkword
-    getLenghtWord() {
-        const worddao = WordDAO.getInstance();
-        worddao.find().then((word) => {
-            if (word != null) {
-                return word.get().length;
+    async getLenghtWord(): Promise<number> {
+
+        const wordDao = WordDAO.getInstance();
+        let ultimapalabra: Word | null = await wordDao.find();
+
+        let now = new Date();
+        let year = now.getFullYear();
+        let month = (now.getMonth() + 1).toString().padStart(2, '0'); // Los meses son 0-indexados, por eso se suma 1
+        let day = now.getDate().toString().padStart(2, '0');
+        let newformattedDate = `${year}-${month}-${day}`;
+
+        if (!ultimapalabra || (ultimapalabra !== null && ultimapalabra.getFormattedDate() != newformattedDate)) {
+            const wordCreated = await this.generateWord()
+            if(wordCreated !== null){
+                await wordDao.addWord(wordCreated.get())
             }
-        })
+            ultimapalabra = wordCreated
+        }
+        const lastWord = await wordDao.find()
+
+        if(lastWord !== null){
+            return lastWord.get().length
+        }
+        else{
+            return -1
+        }
     }
 }  
 export default GameManager;
