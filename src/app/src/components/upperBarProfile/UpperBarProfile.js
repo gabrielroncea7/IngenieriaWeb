@@ -5,12 +5,19 @@ import { useNavigate, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import sessionServices from '../../services/sessionServices';
+import accountServices from '../../services/accountServices';
 
 const UpperBarProfile = () => {
 
 //GET/SET USERNAME
   const [username, setUsername] = useState('')
   sessionServices.getUsername().then(name => setUsername(name))
+
+  const logOut = async (event) => {
+    event.preventDefault()
+
+    await accountServices.logOut(username)
+  }
   
   //take username and check if longer than 6 chars
     const str = {username}
@@ -25,7 +32,7 @@ const UpperBarProfile = () => {
   
   return(
     <div>
-      <p><Link to="/logout">Sign Out</Link></p>
+      <p><Link onClick={logOut} to="/logout">Sign Out</Link></p>
       <p><Link to="/profile">{username} {icon} </Link></p>
     </div>
   );
