@@ -7,7 +7,16 @@ import WordDAO from '../../model/wordDAO/wordDAO'
 import UserDAO from '../../model/userDAO/userDAO'
 import GameDAO from '../../model/gameDAO/gameDAO'
 import axios from 'axios';
+import { Letter } from '../../domain/letter/Letter';
 
+export interface ResponesGameAPI{
+    wordChecked: Array<{
+        letter: string,
+        color: string
+    }>,
+    win: Boolean,
+    points: number
+}
 
 export class GameManager {
 
@@ -34,42 +43,187 @@ export class GameManager {
         }
     }
 
+    //
+
     //recibir como parametro el usuario, y que desde la bdd saquemos los intentos
     //Comprueba la fecha de la palabra. Si es de hoy perfecto, seguimos. Sino se llama a generateWord para conseguir una nueva.
-    async checkWord(palabra: string, usuario: string) {
+    async checkWord(palabra: string, usuario: string): Promise<ResponesGameAPI | null> {
         // LOGICA PARA COMPROBAR LA FECHA DE LA PALABRA
-    
         // Instanciamos worddao
         const worddao = WordDAO.getInstance();
-        const ultimapalabra = await worddao.find();
+        let ultimapalabra: Word | null = await worddao.find();
         // Instanciamos gamedao
         const gamedao = GameDAO.getInstance();
-    
-        if (ultimapalabra != null && ultimapalabra.get() === palabra) {
-            let now = new Date();
-            let year = now.getFullYear();
-            let month = (now.getMonth() + 1).toString().padStart(2, '0'); // Los meses son 0-indexados, por eso se suma 1
-            let day = now.getDate().toString().padStart(2, '0');
-            let newformattedDate = `${year}-${month}-${day}`;
-    
-            if (ultimapalabra.getFormattedDate() == newformattedDate) {
-                // LOGICA PARA COMPROBAR LOS INTENTOS A PARTIR DE UN USUARIO DE LA BDD
-                gamedao.getLastGame(usuario).then((game) => {
-                    if (game != null) {
-                        const vector: Attempt[] = game.getAttempts();
-                        const numIntentos: number = vector.length;
-                        if (numIntentos >= 6) {
-                            return false; // Si ya ha habido 6 intentos, no se puede jugar
-                        } else {
-                            return true; // Si no ha habido 6 intentos, se puede jugar
-                        }
-                    }
-                });
-                //
-            } else {
-                this.generateWord();
-                return false;
+
+        let now = new Date();
+        let year = now.getFullYear();
+        let month = (now.getMonth() + 1).toString().padStart(2, '0'); // Los meses son 0-indexados, por eso se suma 1
+        let day = now.getDate().toString().padStart(2, '0');
+        let newformattedDate = `${year}-${month}-${day}`;
+
+        if (!ultimapalabra || (ultimapalabra !== null && ultimapalabra.getFormattedDate() != newformattedDate)) {
+            const newWord = await this.generateWord()
+
+            if(newWord !== null){
+                await worddao.addWord(newWord.get())
             }
+
+            ultimapalabra = newWord
+        }
+
+        const lastGame: Game | null = await gamedao.getLastGame(usuario)
+        
+        if(lastGame !== null && this.formatDAte(lastGame.getDate()) === newformattedDate && lastGame.getAttempts().length >= 6){
+            return null
+        }
+
+        if (ultimapalabra !== null && ultimapalabra.get().toLowerCase() === palabra.toLowerCase()) {
+            // LOGICA PARA COMPROBAR LOS INTENTOS A PARTIR DE UN USUARIO DE LA BDD
+            //Si las palabras son iguales, ha ganado. Se añaden los puntos y se devuelve el objeto ResponesGameAPI. Todas las letras seran de color verde.
+            
+            // Instanciamos userdao
+            let wordChecked: Array<{
+                letter: string,
+                color: string
+            }> = []
+
+            
+            for(let i = 0 ; i < palabra.length ; i++){
+                if(palabra.toLowerCase()[i] === ultimapalabra.get().toLowerCase()[i]){
+                    wordChecked.push({
+                        letter: palabra.toLowerCase()[i],
+                        color: 'green'
+                    })
+                }
+            }
+
+            let letterArray: Array<Letter> = []
+
+            for(let i = 0 ; i < wordChecked.length ; i++){
+
+                const letter = Letter.jsonCreate({
+                    value: wordChecked[i].letter,
+                    color: wordChecked[i].color
+                })
+                if(letter !== null){
+                    letterArray.push(letter)
+                }
+            }
+
+            let points
+            //Ha ganado a la primera
+            if(lastGame === null || this.formatDAte(lastGame.getDate()) !== newformattedDate){
+                const attempt: Attempt | null = Attempt.create(1, letterArray)
+                if(attempt !== null){
+                    gamedao.addGame(usuario, attempt)
+                }
+                points = this.calcPoints(1)
+            }
+            else{
+                const attempt: Attempt | null = Attempt.create(lastGame.getAttempts().length + 1, letterArray)
+                if(attempt !== null){
+                    gamedao.addAttempt(usuario, attempt)
+                }
+                points = this.calcPoints(lastGame.getAttempts().length + 1)
+            }
+
+            this.addPoints(usuario, points)
+            
+            const respuesta: ResponesGameAPI = {
+                wordChecked: wordChecked,
+                win: true,
+                points: points
+            }
+
+            return respuesta
+            
+        }
+
+        //FRAN
+        else if(ultimapalabra !== null){
+            let wordChecked: Array<{
+                letter: string,
+                color: string
+            }> = []
+
+            for(let i = 0 ; i < palabra.length ; i++){
+                if(palabra.toLowerCase()[i] === ultimapalabra.get().toLowerCase()[i]){
+                    wordChecked.push({
+                        letter: palabra.toLowerCase()[i],
+                        color: 'green'
+                    })
+                }
+                else if(this.isInWord(palabra.toLowerCase()[i], ultimapalabra.get())){
+                    wordChecked.push({
+                        letter: palabra.toLowerCase()[i],
+                        color: 'yellow'
+                    })
+                }
+                else{
+                    wordChecked.push({
+                        letter: palabra.toLowerCase()[i],
+                        color: 'red'
+                    })
+                }
+            }
+
+            let letterArray: Array<Letter> = []
+
+            for(let i = 0 ; i < wordChecked.length ; i++){
+
+                const letter = Letter.jsonCreate({
+                    value: wordChecked[i].letter,
+                    color: wordChecked[i].color
+                })
+                if(letter !== null){
+                    letterArray.push(letter)
+                }
+            }
+
+            if(lastGame === null || this.formatDAte(lastGame.getDate()) !== newformattedDate){
+                const attempt: Attempt | null = Attempt.create(1, letterArray)
+                if(attempt !== null){
+                    gamedao.addGame(usuario, attempt)
+                }
+            }
+            else{
+                const attempt: Attempt | null = Attempt.create(lastGame.getAttempts().length + 1, letterArray)
+                if(attempt !== null){
+                    gamedao.addAttempt(usuario, attempt)
+                }
+            }         
+            
+            const respuesta: ResponesGameAPI = {
+                wordChecked: wordChecked,
+                win: false,
+                points: -1
+            }
+
+            return respuesta
+        }
+        return null
+    }
+
+    formatDAte(date: Date): string{
+        let year = date.getFullYear();
+        let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Los meses son 0-indexados, por eso se suma 1
+        let day = date.getDate().toString().padStart(2, '0');
+
+        return `${year}-${month}-${day}`
+    }
+
+    //Si la letra que se pasa como parametro esta en la palabra, se devuelve true. Sino, false.
+    isInWord(letter: string, word: string): boolean{
+        if(letter.length === 1){
+            for(let i = 0 ; i < word.length ; i++){
+                if(word.toLowerCase()[i] === letter){
+                    return true
+                }
+            }
+            return false
+        }
+        else{
+            return false
         }
     }
 
