@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-import WordDAO from '../model/wordDAO/wordDAO';
 import { GameManager, ResponesGameAPI } from '../controller/gameManager/GameManager';
 
 const app = express();
@@ -8,16 +7,13 @@ const app = express();
 app.use(express.json());
 
 // Devuelve el tamaño de la palabra
-app.get('/', (req: Request, res: Response) => {
+app.get('/', async (req: Request, res: Response) => {
     // Aquí puedes agregar lógica para generar una palabra para el juego
-    const worddao = WordDAO.getInstance();
-    worddao.find().then((word) => {
-        if (word != null) {
-            res.status(200).json({ length: word.get().length });
-            console.log(word.get())
-            console.log(word.get().length)
-        }
-    });
+    const gameManager = new GameManager()
+
+    const length = await gameManager.getLenghtWord()
+
+    res.status(200).send({length: length})
 });
 
 
