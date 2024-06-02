@@ -49,8 +49,7 @@ class UserDAO { //PATRON SINGLETON PARA EVITAR PROBLEMAS DE CONEXION
             const user = new User("", "", email, "", 0, 0, 0);
 
             user.setId(userfound._id.toString()); //id del usuario
-            user.setUsername(userfound._username || ""); //se pone la segunda opción porque es tipo undefined 
-            user.setEmail(email); //se pone solo una opcion porque arriba se esta creando o dejando vacia según el valor de userfound
+            user.setUsername(userfound._username || ""); //se pone la segunda opción porque es tipo undefined
             user.setPassword(userfound._password || "");
             user.setPoints(userfound._points || 0);
             user.setWins(userfound._wins || 0);
@@ -132,7 +131,7 @@ class UserDAO { //PATRON SINGLETON PARA EVITAR PROBLEMAS DE CONEXION
         
         //introducimos el usuario con los datos nuevos
 
-        const result = this.addUser(updatedUser.getUsername(), updatedUser.getEmail().get(), updatedUser.getPassword(), updatedUser.getPoints(), updatedUser.getWins(), updatedUser.getGamesPlayed());
+        const result = this.addUser(updatedUser.getUsername(), updatedUser.getEmail(), updatedUser.getPassword(), updatedUser.getPoints(), updatedUser.getWins(), updatedUser.getGamesPlayed());
 
         return result;
 
@@ -158,7 +157,6 @@ class UserDAO { //PATRON SINGLETON PARA EVITAR PROBLEMAS DE CONEXION
 
             user.setId(userfound._id.toString()); //id del usuario
             user.setUsername(userfound._username || ""); //se pone la segunda opción porque es tipo undefined 
-            user.setEmail(email); //se pone solo una opcion porque arriba se esta creando o dejando vacia según el valor de userfound
             user.setPassword(userfound._password || "");
             user.setPoints(userfound._points || 0);
             user.setWins(userfound._wins || 0);
