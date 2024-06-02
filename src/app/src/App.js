@@ -12,28 +12,41 @@ import sessionServices from './services/sessionServices';
 
 
 function App() {
-      const history = useNavigate();
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route index element={<Navigate to="/signup" replace/>}/>
-          <Route exact path="/signup" element={<SignUp/>} />
-          <Route exact path="/signin" element={<SignIn/>} />
-          <Route exact path="/forbidden" element={<Forbidden/>} />
-      // no login check
-            <Route exact path="/game" element={<Game/>} />
-            <Route exact path="/logout" element={<LogOut/>} />
-            <Route exact path="/profile" element={<Profile/>} />
-            <Route exact path="/errorsignin" element={<ErrorSignIn/>} />
-            <Route exact path="/errorsignup" element={<ErrorSignUp/>
-      // login check
+		const hide={
+			color:"white",
+		};
+     
+      {/* login check
           //{sessionServices.getUsername().length > 0 ? <Route exact path="/game" element={<Game/>} /> : history.push(/forbidden) }
           //{sessionServices.getUsername().length > 0 ? <Route exact path="/logout" element={<LogOut/>} /> : history.push(/forbidden) }
           //{sessionServices.getUsername().length > 0 ? <Route exact path="/profile" element={<Profile/>} /> : history.push(/forbidden) }
           //{sessionServices.getUsername().length > 0 ? <Route exact path="/errorsignin" element={<ErrorSignIn/>} /> : history.push(/forbidden) }
-          //{sessionServices.getUsername().length > 0 ? <Route exact path="/errorsignup" element={<ErrorSignUp/>} /> : history.push(/forbidden) }
+          //{sessionServices.getUsername().length > 0 ? <Route exact path="/errorsignup" element={<ErrorSignUp/>} /> : history.push(/forbidden) }*/}
+          
+          
+  return (
+    <>
+      <Router>
+      	<p style={hide}> const history = useNavigate()</p>
+      	<>
+        <Routes>
+        	<>
+          <Route index element={<Navigate to="/signup" replace/>}/>
+          <Route exact path="/signup" element={<SignUp/>} />
+          <Route exact path="/signin" element={<SignIn/>} />
+          <Route exact path="/forbidden" element={<Forbidden/>} />
+          	</>
+      // no login check
+      		<>
+            <Route exact path="/game" element={<Game/>} />
+            <Route exact path="/logout" element={<LogOut/>} />
+            <Route exact path="/profile" element={<Profile/>} />
+            <Route exact path="/errorsignin" element={<ErrorSignIn/>} />
+            <Route exact path="/errorsignup" element={<ErrorSignUp/>} />
+            	</>
+      
         </Routes>
+        </>
       </Router>
     </>
   );
