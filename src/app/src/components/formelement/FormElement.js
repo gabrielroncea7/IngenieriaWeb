@@ -11,7 +11,7 @@ import "./FormElement.css";
 
 function FormElement(props) {
 //extract type, name and requited aspect of element
-  const { type, name, required } = props;
+  const { type, name, required, onchange} = props;
 
   // requiredValue knows if the element is required (true) or not (false)
   const requiredValue = required ? "required" : "";
@@ -21,7 +21,7 @@ function FormElement(props) {
   switch (type) {
 
     case "input":
-      element = <input type="text" id={name} {...requiredValue} />;
+      element = <input type="text" id={name} {...requiredValue} onChange={event => onchange(event)}/>;
       break;
 
     case "textarea":
@@ -40,7 +40,7 @@ function FormElement(props) {
       break;
 
     default:
-      element = <input type="text" id={name} {...requiredValue} />;
+      element = <input type="text" id={name} {...requiredValue} onChange={event => onchange(event)}/>;
 
   }
 

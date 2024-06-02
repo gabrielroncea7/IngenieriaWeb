@@ -14,7 +14,7 @@ import FormElement from '../formelement/FormElement';
 function Form(props) {
 
 //extracts the FormElements and the Button
-  const { elements, button } = props;
+  const { elements, button, onSubmit } = props;
 
   // Renders elements and makes them FormElements to show in the finished Form
   const renderElements = () => {
@@ -26,7 +26,7 @@ function Form(props) {
   return (
     <form>
       {renderElements()}
-      <Button {...button} />
+      <Button {...button} onClick={(event) => onSubmit(event)}/>
     </form>
   );
 }
