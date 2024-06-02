@@ -1,4 +1,6 @@
 import express, { Request, Response } from 'express';
+import WordDAO from '../model/wordDAO/wordDAO';
+import { GameManager } from '../controller/gameManager/GameManager';
 
 const app = express();
 
@@ -19,20 +21,28 @@ interface ResponesGameAPI{
 // Devuelve el tamaño de la palabra
 app.get('/', (req: Request, res: Response) => {
     // Aquí puedes agregar lógica para generar una palabra para el juego
-    const word = generateWord(); // Supongamos que esta función genera una palabra aleatoria
-    res.status(200).json({ word });
+    const worddao = WordDAO.getInstance();
+    worddao.find().then((word) => {
+        if (word != null) {
+            res.status(200).json({ length: word.get().length });
+            console.log(word.get())
+            console.log(word.get().length)
+        }
+    });
 });
 
 
 // Endpoint para verificar una palabra ingresada por el jugador
-app.post('/', (req: Request, res: Response) => {
+/*app.post('/', (req: Request, res: Response) => {
     const { word } = req.body;
-    // Aquí puedes agregar lógica para verificar la palabra ingresada por el jugador
-    const isValid = checkWord(word); // Supongamos que esta función verifica si la palabra es válida
-    res.status(200).json({ isValid });
+    const { username, email, password } = req.body;
+
+    const gameManager = new GameManager();
+    gameManager.checkWord(word, username).then((response: ResponesGameAPI) => {
+        res.status(200).json(response);
+    });
 });
-
-
+*/
 
 
 
