@@ -25,8 +25,8 @@ class AccountManager {
     async signUp(username: string, email: string, password: string): Promise<boolean> {
         const userDao: UserDAO = UserDAO.getInstance()
 
-        let exists = await userDao.find(username)
-        exists = exists && await userDao.findByEmail(email)
+        let exists = (await userDao.find(username)) === null
+        exists = (exists && await userDao.findByEmail(email)) === null
 
         if(exists){
 
