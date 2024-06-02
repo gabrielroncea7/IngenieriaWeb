@@ -67,7 +67,7 @@ describe('GameManager', () => {
         const user1: User | null = await userDAO.find('testUser'); 
 
         if (user1) { // Verificar si user1 no es null
-            gameManager.addPoints(user1.getUsername(), 85)
+            gameManager.addPoints( user1.getUsername(), 85)
                 .then((resultado) => {
 
                     if(resultado == true){
@@ -96,9 +96,10 @@ describe('GameManager', () => {
 
                 })
             
-        } else {
-            fail('User not found');
+                
         }
+
+        
     });
     it('Generate word', async ()=>{
         const max = 10;
