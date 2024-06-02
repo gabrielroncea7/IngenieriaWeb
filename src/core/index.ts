@@ -7,6 +7,7 @@ import registerApi from './api/registerAPI'
 import sessionApi from './api/sessionAPI'
 import session from 'express-session'
 import profileApi from './api/profileAPI'
+import cors from 'cors'
 
 const app = express();
 const port = 4000;
@@ -21,6 +22,8 @@ app.use(session({
     maxAge: 60000 * 60 //La sesion dura 1 hora
   }
 }))
+
+app.use(cors())
 
 /*
 app.use((req, res, next) => {
