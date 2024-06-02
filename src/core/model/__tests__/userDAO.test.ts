@@ -24,10 +24,11 @@ describe('Pruebas para la clase UserDAO', () => {
     let user2 = await userDAO1.find('PruebaUpdate');
     let id = '';
     let email = new Email('');
+    let email1: string = '';
   
     if (user2 !== null) {
       id = user2.getId();
-      email = user2.getEmail();
+      email1 = user2.getEmail();
       let userUpdate = new User(id, 'PruebaUpdate', email, '12345', 1, 3, 7);
   
       // Esperar a que updateUser se complete antes de continuar con la prueba

@@ -1,50 +1,45 @@
+// Importa las clases y métodos necesarios
 import GameDAO from '../gameDAO/gameDAO';
+import { Attempt } from '../../domain/attempt/Attempt';
+import { Game } from '../../domain/game/Game';
+import { Letter } from '../../domain/letter/Letter';
 
-describe('Pruebas para la clase GameDAO', ()=>{
-    const gameDAO1 = GameDAO.getInstance();
-    const username = "Plantilla"
-    //Juego completo
-    const attempts = "[[{\"value\": \"H\", \"color\": \"green\"}, {\"value\": \"O\", \"color\": \"green\"}, {\"value\": \"L\", \"color\": \"green\"}, {\"value\": \"O\", \"color\":  \"red\"}]]"
-    //Un intento
-    const attempt = "[{\"value\": \"H\", \"color\": \"green\"}, {\"value\": \"O\", \"color\": \"green\"}, {\"value\": \"L\", \"color\": \"green\"}, {\"value\": \"A\", \"color\":  \"green\"}]"
+// Describe tus pruebas unitarias
+describe('Pruebas para la clase GameDAO', () => {
+    // Define las variables necesarias para las pruebas
+    const gameDAO = GameDAO.getInstance();
+    const username = "Plantilla";
+    const attempts = []; // Define los intentos necesarios para tus pruebas
+    const letter1 = new Letter("A", "green");
+    const letter2 = new Letter("B", "red");
+    const letter3 = new Letter("C", "yellow");
 
+// Suponiendo que orden es 1 y la lista de letras está formada por letter1, letter2 y letter3
+const attempt = new Attempt(1, [letter1, letter2, letter3]);
     
-    
-    it('Probar función addGame de un user que está en la BBDD', async () => {
-        let game = await gameDAO1.addGame(username, attempts).then((game) =>{
-            expect(game).toEqual(true);
-        });
-
-        
+    // Prueba la función addGame
+    it('Probar función addGame', async () => {
+        // Llama a la función addGame y realiza las aserciones necesarias
+        const result = await gameDAO.addGame(username, attempt);
+        expect(result).toEqual(true); // Por ejemplo, verifica si la función devuelve true
     });
 
-
-
+    // Prueba la función addAttempt
     it('Probar función addAttempt', async () => {
-        await gameDAO1.addAttempt(username, attempt).then((result) => {
-        expect(result).toEqual(true);
-        });
+        // Llama a la función addAttempt y realiza las aserciones necesarias
+        const result = await gameDAO.addAttempt(username, attempt);
+        expect(result).toEqual(true); // Por ejemplo, verifica si la función devuelve true
     });
 
+    // Prueba la función getLastGame
     it('Probar función getLastGame', async () => {
-        await gameDAO1.getLastGame('Plantilla').then((game) =>{
-            if (game !== false) {
-                expect(typeof game).toBe('string');
-                expect(game.length).toBeGreaterThan(0);
-                console.log(game);
-                 
-            } else {
-                // Si game es false, la prueba debe fallar
-                fail('El juego no fue encontrado en la base de datos');
-                
-            }
-
-        });
-        
+        // Llama a la función getLastGame y realiza las aserciones necesarias
+        const game: Game | null = await gameDAO.getLastGame(username);
+        expect(game).not.toBeNull(); // Por ejemplo, verifica si el juego no es nulo
+        if (game) {
+            // Realiza más aserciones específicas sobre el objeto Game si es necesario
+            expect(game.date).toBeDefined();
+        }
     });
-
-
-
-
-
 });
+

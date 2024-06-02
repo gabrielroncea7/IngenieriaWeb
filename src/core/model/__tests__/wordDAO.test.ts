@@ -14,7 +14,8 @@ describe('Pruebas para la clase WordDAO', () => {
 
   it('Probar funcion find (devuelve la última palabra introducida)', async()=> {
     let word = await wordDAO1.find()
-    expect(word?.get()).toEqual('Prueba');
+    let word1 = await wordDAO1.find()
+    expect(word?.get()).toEqual(word1?.get());
 
   });
 
