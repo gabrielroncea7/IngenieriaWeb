@@ -10,7 +10,7 @@ const signUp = (user) => {
 
 const signIn = (user) => {
     return axios
-            .post(`${baseUrl}/api/signin`, user)
+            .post(`${baseUrl}/api/login`, user)
             .then(response => response)
 }
 
