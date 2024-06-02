@@ -55,7 +55,7 @@ export class GameManager {
             if (ultimapalabra.getFormattedDate() == newformattedDate) {
                 // LOGICA PARA COMPROBAR LOS INTENTOS A PARTIR DE UN USUARIO DE LA BDD
                 gamedao.getLastGame(usuario).then((game) => {
-                    if (game != false) {
+                    if (game != null) {
                         const vector: Attempt[] = game.getAttempts();
                         const numIntentos: number = vector.length;
                         if (numIntentos >= 6) {
@@ -116,15 +116,18 @@ export class GameManager {
 
     async getLastGame(usuario: string): Promise<Game | null> {
         const gamedao = GameDAO.getInstance();
-        gamedao.getLastGame(usuario).then((game)=>{
-            if(game != false){
-                return game
-            }
-            else{
-                return null
-            }
-        })
-        return null
+        const game = await gamedao.getLastGame(usuario);
+
+        if(game){
+
+            return game
+
+         }
+        else{
+                
+            return null
+        }
+        
     }
 
     //Devuelve el tamaño de la palabra y todas las condiciones del checkword

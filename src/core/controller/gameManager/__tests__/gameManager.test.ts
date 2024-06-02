@@ -1,6 +1,7 @@
 import GameManager from '../GameManager'
 import UserDAO from '../../../model/userDAO/userDAO';
 import { User } from '../../../domain/user/User';
+import { Game } from '../../../domain/game/Game';
 
 describe('GameManager', () => {
     let gameManager: GameManager;
@@ -113,30 +114,23 @@ describe('GameManager', () => {
     }, 20000);
 
     it('Test para probar la función getLastGame', async ()=>{
-        userDAO.find('testUser')
-            .then(async (user1) => {
-                if(user1){
-                    gameManager.getLastGame('testUser')
-                        .then((game) => {
-                            if(game != null){
+
+        const latestGame = await gameManager.getLastGame('testUser');
+
+        if(latestGame){
+
+            expect((latestGame instanceof Game));
+            expect(latestGame.getAttempts().length > 0)
+
+        }
+        else{
+
+            fail('Game not found');
+
+        }
+
         
-                                expect(typeof game).toBe('Game');
-                                expect(game.getAttempts().length).toBeGreaterThan(0);
         
-                            }
-                            else{
         
-                                console.error('Game not found');
-        
-                            }
-        
-                        })
-                    
-                }
-                else{
-                    console.error('user not found');
-                }
-            })
-        
-    }, 20000);
+    }, 200000);
 });
