@@ -18,6 +18,7 @@ const DeleteProfile = ({ isOpen, onClose }) => {
   //GET/SET USERNAME
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [message, setMessage] = useState({message: '', color: ''})
   sessionServices.getUsername().then(name => setUsername(name))
   
   const handleSubmit = async (event) => {
@@ -25,7 +26,15 @@ const DeleteProfile = ({ isOpen, onClose }) => {
 
     if(response.status == 200){
       //redireccionar a signup
+      setMessage({message: 'User deleted', color: 'green'})
     }
+    else{
+      setMessage({message: 'Error deleting user', color: 'red'})
+    }
+
+    setTimeout(() => {
+      setMessage({message: '', color: ''})
+    }, 5000)
   };
 
   //returns text with warning about account deletion
@@ -56,7 +65,7 @@ const DeleteProfile = ({ isOpen, onClose }) => {
         <div>
           <Button text="Close Warning Window" onClick={onClose} />
           </div>
-          {/*<Message message={message.message} color={message.color}/>*/}
+          {<Message message={message.message} color={message.color}/>}
       </Modal>
     </>
   );
