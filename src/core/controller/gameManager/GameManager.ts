@@ -16,18 +16,18 @@ export class GameManager {
     async generateWord(): Promise<Word | null> {
 
         try {
-            //Llamada a la API
-            const response = await axios.get('https://clientes.api.greenborn.com.ar/public-random-word');
-            //Extraemos la palabra del repsone
-            const palabra = response.data;
-            //Comprobamos que sea un objeto WORD
+            let word
+            do{
+                //Llamada a la API
+                const response = await axios.get('https://clientes.api.greenborn.com.ar/public-random-word');
+                //Extraemos la palabra del repsone
+                const palabra = response.data[0];
+                //Comprobamos que sea un objeto WORD
 
-            const isCreated = Word.create(palabra, new Date());
-            if (isCreated != null) {
-                return isCreated;
-            } else {
-                return null;
-            }
+                word = Word.create(palabra, new Date());
+            }while(word === null)
+
+            return word
         } catch (error) {
             console.error('Error generating word:', error);
             return null;
@@ -72,17 +72,24 @@ export class GameManager {
             }
         }
     }
-    
 
     //addpoints
-    async addPoints(username: string, points: number)   {
+    async addPoints(username: string, points: number): Promise<boolean> {
         var userDAO = UserDAO.getInstance();
-        userDAO.find(username).then((user) => {   
-            user?.setPoints(user.getPoints() + points);
+        userDAO.find(username).then(async (user) => {  
             if (user != null){
-            userDAO.updateUser(user);
+                user.setPoints(user.getPoints() + points);
+                await userDAO.updateUser(user);
+
+                return true;
+            }
+            else{
+
+                return false;
+
             }
         });
+        return false
 }
     
     //calcpoints
@@ -107,14 +114,17 @@ export class GameManager {
     }
     
 
-    getLastGame(usuario: string) {
+    async getLastGame(usuario: string): Promise<Game | null> {
         const gamedao = GameDAO.getInstance();
         gamedao.getLastGame(usuario).then((game)=>{
-
             if(game != false){
                 return game
             }
+            else{
+                return null
+            }
         })
+        return null
     }
 
     //Devuelve el tamaño de la palabra y todas las condiciones del checkword

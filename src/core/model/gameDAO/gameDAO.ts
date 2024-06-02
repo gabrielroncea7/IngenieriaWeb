@@ -31,21 +31,21 @@ class GameDAO{ //utilizaremos el patron singleton
     }
 
 
-    public async getLastGame(username: String){ //Devuelve el ultimo Game del usuario indicado (Promise < False || Game >)
-
+    public async getLastGame(username: String): Promise<Game | false>{ //Devuelve el ultimo Game del usuario indicado (Promise < False || Game >)
+        console.error(username)
         const foundgame = await GameSchema.findOne({_username: username}).sort({createdAt: -1})
-
+        
         if(!foundgame){
 
+            console.error(foundgame)
             console.log("No se ha encontrado el game en la base de datos");
 
             return false;
 
         }
         else{
-
             const latestGame = new Game(foundgame._attempts, foundgame.createdAt, foundgame._points || 0);
-
+            console.error(latestGame)
             return latestGame;
 
         }
