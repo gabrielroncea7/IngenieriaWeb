@@ -10,6 +10,7 @@ import Header from './components/header/Header';
 
 const SignIn = () => {
 
+
 //empty strings to be set
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -55,6 +56,10 @@ const SignIn = () => {
 	<h2>Sign into an Account</h2>
 	<Form {...signInForm} onSubmit={handleSubmit} />
 	<p>Do you want to create an account? <Link to="/signup">Sign Up</Link></p>
+	
+	<div>
+		<p>Go play? <Link to="/game">Play</Link></p>
+	</div>
     </div>
   );
 };
