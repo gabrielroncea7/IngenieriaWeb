@@ -31,9 +31,11 @@ const UpperBarProfile = () => {
     const icon = <FontAwesomeIcon icon={faCircleUser} />
   
   return(
-    <div>
-      <p><Link onClick={logOut} to="/logout">Sign Out</Link></p>
-      <p><Link to="/profile">{username} {icon} </Link></p>
+    <div className="upper-bar-profile">
+      <div className="links">
+        <Link onClick={logOut} to="/logout">Sign Out</Link> &nbsp;&nbsp;&nbsp;
+        <Link to="/profile">{displayUsername} {icon}</Link>
+      </div>
     </div>
   );
 }
